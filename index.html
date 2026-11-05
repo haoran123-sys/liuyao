@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="zhaohaoran（浩然老师）">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23C8392E'/%3E%3Ccircle cx='50' cy='50' r='32' fill='none' stroke='%23DCB482' stroke-width='7'/%3E%3Crect x='42' y='42' width='16' height='16' fill='%23DCB482'/%3E%3C/svg%3E">
+<title>浩然老师六爻专业排盘</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"Microsoft YaHei","微软雅黑",sans-serif;background:#FAF7F2;color:#2A1F14;min-height:100vh;padding:20px}
+  .container{max-width:960px;margin:0 auto}
+  .header{text-align:center;padding:18px 0 14px;border-bottom:3px double #C8392E;margin-bottom:18px}
+  .header h1{font-size:30px;font-weight:900;color:#8B2500;letter-spacing:6px}
+  .header .sub{font-size:13px;color:#B8860B;margin-top:4px;letter-spacing:3px;font-weight:600}
+  .input-panel{background:#fff;border:1px solid #E0D5C0;border-radius:8px;padding:16px 20px;margin-bottom:16px;box-shadow:0 2px 6px rgba(139,37,0,.06)}
+  .row{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:12px}
+  .row:last-child{margin-bottom:0}
+  .field{display:flex;flex-direction:column;gap:4px}
+  .field label{font-size:13px;color:#8B7355;font-weight:600}
+  .field select{padding:7px 10px;border:1px solid #D4C5A9;border-radius:4px;font-size:15px;font-family:inherit;background:#FFFDF8}
+  .yao-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .yao-item{display:flex;flex-direction:column;align-items:center;gap:3px}
+  .yao-item .yl{font-size:12px;color:#8B7355}
+  .yao-item select{padding:6px 8px;border:1px solid #D4C5A9;border-radius:4px;font-size:14px;font-family:inherit;background:#FFFDF8;width:90px;text-align:center}
+  .btn{padding:10px 32px;background:linear-gradient(135deg,#C8392E,#A02818);color:#fff;border:none;border-radius:4px;font-size:18px;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:6px;box-shadow:0 2px 8px rgba(200,57,46,.3)}
+  .btn:hover{opacity:.92}
+  .btn:disabled{opacity:.55;cursor:not-allowed}
+  .coin-panel{background:linear-gradient(135deg,#FDF7EC,#F8ECDA);border:1px solid #E2CBA7;border-radius:8px;padding:16px 20px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;box-shadow:0 2px 6px rgba(139,37,0,.05)}
+  .coin-left{display:flex;flex-direction:column;gap:10px;flex:1;min-width:260px}
+  .coin-title{font-size:15px;font-weight:800;color:#8B2500;letter-spacing:3px}
+  .coin-tip{font-size:12px;color:#B8860B;letter-spacing:1px}
+  .coins{display:flex;gap:14px;align-items:center}
+  .coin{width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#F7DA95,#C99A3B);border:3px solid #A87E2B;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;color:#6E4E12;box-shadow:0 2px 6px rgba(140,110,50,.35);user-select:none}
+  .coin.zi{color:#8B2500}
+  .coin.bei{color:#6E4E12}
+  .coin.shake{animation:coinShake .55s ease}
+  @keyframes coinShake{0%{transform:rotateY(0deg) scale(1)}30%{transform:rotateY(120deg) scale(1.08)}60%{transform:rotateY(240deg) scale(.95)}100%{transform:rotateY(360deg) scale(1)}}
+  .coin-result{font-size:15px;color:#5C4A3A;font-weight:700;line-height:1.6}
+  .coin-result .r-strong{color:#C8392E;font-weight:800}
+  .coin-right{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .coin-progress{font-size:17px;font-weight:900;color:#B8860B;letter-spacing:2px}
+  .coin-progress.done{color:#C8392E}
+  .coin-btn{padding:10px 30px;letter-spacing:5px}
+  .btn-reset{padding:7px 20px;background:#fff;color:#8B7355;border:1px solid #D4C5A9;border-radius:4px;font-size:14px;font-family:inherit;cursor:pointer;letter-spacing:2px}
+  .btn-reset:hover{background:#FDF8F0;color:#8B2500;border-color:#C8392E}
+  .info-bar{background:#fff;border-left:4px solid #B8860B;padding:12px 18px;margin-bottom:14px;font-size:15px;display:flex;flex-wrap:wrap;gap:16px}
+  .info-item{display:flex;gap:6px}
+  .info-item .label{color:#8B7355}
+  .info-item .value{font-weight:700;color:#8B2500}
+  .pan-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+  @media(max-width:750px){.pan-grid{grid-template-columns:1fr}}
+  .gua-box{background:#fff;border:1px solid #E0D5C0;border-radius:8px;padding:16px}
+  .gua-title{font-size:16px;font-weight:700;color:#8B2500;text-align:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #E8DCC8}
+  .gua-name{font-size:24px;font-weight:900;color:#8B2500;text-align:center;margin-bottom:2px}
+  .gua-meta{font-size:13px;color:#B8860B;text-align:center;margin-bottom:10px;font-weight:600}
+  .yao-list{display:flex;flex-direction:column-reverse;gap:4px}
+  .yao-line{display:grid;grid-template-columns:44px 56px 1fr 48px 44px 40px;gap:4px;align-items:center;padding:5px 6px;border-radius:4px;font-size:14px}
+  .yao-line:hover{background:#FAF6EE}
+  .yao-line.dong{background:#FDF0EE;border-left:3px solid #C8392E}
+  .yao-line.kong{opacity:.6}
+  .yao-line .ylc{text-align:center;font-size:11px;color:#8B7355}
+  .yao-line .yn{text-align:center;font-weight:700;font-size:14px;color:#2A1F14}
+  .yao-line .ytd{display:flex;align-items:center;gap:4px}
+  .yao-line .ylq{text-align:center;font-size:13px;color:#5C4A3A}
+  .yao-line .ywang{text-align:center;font-size:12px;font-weight:600}
+  .wang{color:#C8392E}.xiang{color:#B8860B}.xiu{color:#8B7355}.qiu{color:#999}.si{color:#666}
+  .yao-line .ysy{text-align:center;font-size:12px;color:#C8392E;font-weight:700}
+  .yao-yang{width:56px;height:9px;background:#2A1F14;border-radius:1px}
+  .yao-yin{width:56px;height:9px;display:flex;gap:5px}
+  .yao-yin span{flex:1;background:#2A1F14;border-radius:1px}
+  .tags{font-size:11px;color:#C8392E}
+  .tag-kong{color:#999}.tag-chong{color:#C8392E}.tag-xing{color:#B8860B}
+  .footer{text-align:center;padding:14px;font-size:12px;color:#B0A090}
+  /* ===== 移动端适配（375px 窄屏优先，触屏友好） ===== */
+  @media (max-width: 767px){
+    body{padding:12px}
+    .header{padding:12px 0 10px;margin-bottom:12px}
+    .header h1{font-size:24px;letter-spacing:4px}
+    .header .sub{font-size:11px;letter-spacing:2px}
+    .input-panel{padding:12px 14px}
+    .row{gap:10px}
+    .field{flex:1 1 auto;min-width:0}
+    .field input,.field select{font-size:16px;height:44px;padding:6px 8px;box-sizing:border-box}
+    .field label{font-size:13px}
+    .yao-row{flex-wrap:wrap;gap:8px}
+    .yao-item{flex:1 1 30%;min-width:96px}
+    .yao-item .yl{font-size:12px}
+    .yao-item select{font-size:16px;height:44px;width:100%;box-sizing:border-box}
+    .coin-panel{flex-direction:column;align-items:stretch;gap:12px;padding:14px}
+    .coin-left{min-width:0;align-items:center;text-align:center;gap:8px}
+    .coin-tip{font-size:11px}
+    .coins{gap:12px}
+    .coin{width:48px;height:48px;font-size:17px}
+    .coin-result{font-size:14px}
+    .coin-right{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
+    .coin-progress{font-size:16px}
+    .coin-btn{min-height:44px;padding:10px 26px;font-size:17px}
+    .btn-reset{height:44px;padding:0 18px;font-size:14px}
+    .btn{width:100%;min-height:48px;padding:12px 20px;font-size:18px}
+    .info-bar{font-size:14px;gap:10px 16px;padding:10px 12px}
+    .gua-box{padding:12px}
+    .gua-name{font-size:22px}
+    .gua-meta{font-size:12px}
+    .yao-line{grid-template-columns:30px 54px minmax(0,1fr) 44px 26px 26px;gap:3px;padding:9px 5px;font-size:14px}
+    .yao-line .yn{font-size:14px}
+    .yao-line .ylq{font-size:14px}
+    .yao-line .ylc{font-size:11px}
+    .yao-line .ywang{font-size:12px}
+    .yao-line .ysy{font-size:12px}
+    .yao-yang{width:42px;height:8px}
+    .yao-yin{width:42px;height:8px;gap:4px}
+    .footer{font-size:11px;padding:10px}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>浩然老师六爻专业排盘</h1>
+    <div class="sub">火珠林法 · 京房易 · 卜筮正宗</div>
+  </div>
+  <div class="input-panel">
+    <div class="row">
+      <div class="field"><label>公历年</label>
+        <input type="number" id="gy" value="2026" min="1900" max="2100" style="width:90px">
+      </div>
+      <div class="field"><label>公历月</label>
+        <input type="number" id="gm" value="11" min="1" max="12" style="width:70px">
+      </div>
+      <div class="field"><label>公历日</label>
+        <input type="number" id="gd" value="3" min="1" max="31" style="width:70px">
+      </div>
+      <div class="field"><label>占时</label>
+        <select id="sc">
+          <option value="0">子时</option><option value="1">丑时</option><option value="2">寅时</option>
+          <option value="3">卯时</option><option value="4">辰时</option><option value="5">巳时</option>
+          <option value="6" selected>午时</option><option value="7">未时</option><option value="8">申时</option>
+          <option value="9">酉时</option><option value="10">戌时</option><option value="11">亥时</option>
+        </select>
+      </div>
+    </div>
+    <div class="row" id="ganzhiShow" style="background:#FDF8F0;padding:10px 14px;border-radius:6px;border:1px solid #E8DCC8;font-size:15px;gap:20px;flex-wrap:wrap">
+      <div class="info-item"><span class="label">年柱</span><span class="value" id="ngz">-</span></div>
+      <div class="info-item"><span class="label">月建</span><span class="value" id="yjz">-</span></div>
+      <div class="info-item"><span class="label">日辰</span><span class="value" id="rgz">-</span></div>
+      <div class="info-item"><span class="label">时柱</span><span class="value" id="sgz">-</span></div>
+    </div>
+    <div class="row"><div class="yao-row" id="yaoInput"></div></div>
+    <div class="coin-panel">
+      <div class="coin-left">
+        <div class="coin-title">三枚铜钱 · 摇币起卦</div>
+        <div class="coins" id="coinDisplay">
+          <div class="coin zi">字</div>
+          <div class="coin zi">字</div>
+          <div class="coin zi">字</div>
+        </div>
+        <div class="coin-tip">字为阴 · 背为阳 · 自下而上，摇六次成卦</div>
+        <div class="coin-result" id="coinResult">静心默念所问之事，轻点「摇 币」起卦，自初爻摇起</div>
+      </div>
+      <div class="coin-right">
+        <div class="coin-progress" id="coinProgress">第 0 / 6 爻</div>
+        <button class="btn coin-btn" id="coinBtn" onclick="tossCoin()">摇 币</button>
+        <button class="btn-reset" onclick="resetCoins()">重新摇</button>
+      </div>
+    </div>
+    <div class="row"><button class="btn" onclick="run()">排 盘</button></div>
+  </div>
+  <div id="out"></div>
+  <div class="footer">浩然老师（zhaohaoran）六爻专业排盘 · 依据卜筮正宗 · 仅供研习参考</div>
+</div>
+<script>
+// ===== 64卦标准数据表（依据八宫卦序）=====
+const GUA = {"111111": {"name": "乾为天", "gong": "乾", "gongWx": "金", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "011111": {"name": "天风姤", "gong": "乾", "gongWx": "金", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "001111": {"name": "天山遁", "gong": "乾", "gongWx": "金", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "000111": {"name": "天地否", "gong": "乾", "gongWx": "金", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "000011": {"name": "风地观", "gong": "乾", "gongWx": "金", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "000001": {"name": "山地剥", "gong": "乾", "gongWx": "金", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "000101": {"name": "火地晋", "gong": "乾", "gongWx": "金", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "111101": {"name": "火天大有", "gong": "乾", "gongWx": "金", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "100100": {"name": "震为雷", "gong": "震", "gongWx": "木", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "000100": {"name": "雷地豫", "gong": "震", "gongWx": "木", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "010100": {"name": "雷水解", "gong": "震", "gongWx": "木", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "011100": {"name": "雷风恒", "gong": "震", "gongWx": "木", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "011000": {"name": "地风升", "gong": "震", "gongWx": "木", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "011010": {"name": "水风井", "gong": "震", "gongWx": "木", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "011110": {"name": "泽风大过", "gong": "震", "gongWx": "木", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "100110": {"name": "泽雷随", "gong": "震", "gongWx": "木", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "010010": {"name": "坎为水", "gong": "坎", "gongWx": "水", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "110010": {"name": "水泽节", "gong": "坎", "gongWx": "水", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "100010": {"name": "水雷屯", "gong": "坎", "gongWx": "水", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "101010": {"name": "水火既济", "gong": "坎", "gongWx": "水", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "101110": {"name": "泽火革", "gong": "坎", "gongWx": "水", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "101100": {"name": "雷火丰", "gong": "坎", "gongWx": "水", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "101000": {"name": "地火明夷", "gong": "坎", "gongWx": "水", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "010000": {"name": "地水师", "gong": "坎", "gongWx": "水", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "001001": {"name": "艮为山", "gong": "艮", "gongWx": "土", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "101001": {"name": "山火贲", "gong": "艮", "gongWx": "土", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "111001": {"name": "山天大畜", "gong": "艮", "gongWx": "土", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "110001": {"name": "山泽损", "gong": "艮", "gongWx": "土", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "110101": {"name": "火泽睽", "gong": "艮", "gongWx": "土", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "110111": {"name": "天泽履", "gong": "艮", "gongWx": "土", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "110011": {"name": "风泽中孚", "gong": "艮", "gongWx": "土", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "001011": {"name": "风山渐", "gong": "艮", "gongWx": "土", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "000000": {"name": "坤为地", "gong": "坤", "gongWx": "土", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "100000": {"name": "地雷复", "gong": "坤", "gongWx": "土", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "110000": {"name": "地泽临", "gong": "坤", "gongWx": "土", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "111000": {"name": "地天泰", "gong": "坤", "gongWx": "土", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "111100": {"name": "雷天大壮", "gong": "坤", "gongWx": "土", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "111110": {"name": "泽天夬", "gong": "坤", "gongWx": "土", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "111010": {"name": "水天需", "gong": "坤", "gongWx": "土", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "000010": {"name": "水地比", "gong": "坤", "gongWx": "土", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "011011": {"name": "巽为风", "gong": "巽", "gongWx": "木", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "111011": {"name": "风天小畜", "gong": "巽", "gongWx": "木", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "101011": {"name": "风火家人", "gong": "巽", "gongWx": "木", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "100011": {"name": "风雷益", "gong": "巽", "gongWx": "木", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "100111": {"name": "天雷无妄", "gong": "巽", "gongWx": "木", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "100101": {"name": "火雷噬嗑", "gong": "巽", "gongWx": "木", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "100001": {"name": "山雷颐", "gong": "巽", "gongWx": "木", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "011001": {"name": "山风蛊", "gong": "巽", "gongWx": "木", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "101101": {"name": "离为火", "gong": "离", "gongWx": "火", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "001101": {"name": "火山旅", "gong": "离", "gongWx": "火", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "011101": {"name": "火风鼎", "gong": "离", "gongWx": "火", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "010101": {"name": "火水未济", "gong": "离", "gongWx": "火", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "010001": {"name": "山水蒙", "gong": "离", "gongWx": "火", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "010011": {"name": "风水涣", "gong": "离", "gongWx": "火", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "010111": {"name": "天水讼", "gong": "离", "gongWx": "火", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "101111": {"name": "天火同人", "gong": "离", "gongWx": "火", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "110110": {"name": "兑为泽", "gong": "兑", "gongWx": "金", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "010110": {"name": "泽水困", "gong": "兑", "gongWx": "金", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "000110": {"name": "泽地萃", "gong": "兑", "gongWx": "金", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "001110": {"name": "泽山咸", "gong": "兑", "gongWx": "金", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "001010": {"name": "水山蹇", "gong": "兑", "gongWx": "金", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "001000": {"name": "地山谦", "gong": "兑", "gongWx": "金", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "001100": {"name": "雷山小过", "gong": "兑", "gongWx": "金", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "110100": {"name": "雷泽归妹", "gong": "兑", "gongWx": "金", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}};
+
+const DZWX={'子':'水','丑':'土','寅':'木','卯':'木','辰':'土','巳':'火','午':'火','未':'土','申':'金','酉':'金','戌':'土','亥':'水'};
+const ZHI_IDX={'子':0,'丑':1,'寅':2,'卯':3,'辰':4,'巳':5,'午':6,'未':7,'申':8,'酉':9,'戌':10,'亥':11};
+const LIUSHEN=['青龙','朱雀','勾陈','螣蛇','白虎','玄武'];
+const ZHI_NAMES=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const GAN_NAMES=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+
+// ===== 干支计算 =====
+// 日干支：1949-10-01 = 甲子日(0,0)
+function calcDayGZ(y,m,d){
+  const base=new Date(1949,9,1);
+  const t=new Date(y,m-1,d);
+  const diff=Math.round((t-base)/86400000);
+  return {g:((diff%10)+10)%10, z:((diff%12)+12)%12};
+}
+
+// 月建：根据十二节令近似日期
+// [月,日,月建地支索引] 立春后建寅(2) 惊蛰后建卯(3) ...
+const JIEQI = [
+  [1,6,1],   // 小寒后建丑
+  [2,4,2],   // 立春后建寅
+  [3,6,3],   // 惊蛰后建卯
+  [4,5,4],   // 清明后建辰
+  [5,6,5],   // 立夏后建巳
+  [6,6,6],   // 芒种后建午
+  [7,7,7],   // 小暑后建未
+  [8,8,8],   // 立秋后建申
+  [9,8,9],   // 白露后建酉
+  [10,8,10], // 寒露后建戌
+  [11,8,11], // 立冬后建亥
+  [12,7,0],  // 大雪后建子
+];
+function calcYueJian(m,d){
+  for(let i=JIEQI.length-1;i>=0;i--){
+    if(m>JIEQI[i][0]||(m===JIEQI[i][0]&&d>=JIEQI[i][1])) return JIEQI[i][2];
+  }
+  return 1;
+}
+
+// 年干支：以立春为界
+function calcYearGZ(y,m,d){
+  let year=y;
+  // 立春前算上一年
+  if(m<2||(m===2&&d<4)) year=y-1;
+  return {g:((year-4)%10+10)%10, z:((year-4)%12+12)%12};
+}
+
+// 时干支：甲己起甲子，乙庚起丙子，丙辛起戊子，丁壬起庚子，戊癸起壬子
+function calcShiGZ(dayGanIdx, shichenIdx){
+  const startGan=[0,2,4,6,8][Math.floor(dayGanIdx/2)%5];
+  // 甲己日(0,5)起甲子(0)，乙庚日(1,6)起丙子(2)，丙辛日(2,7)起戊子(4)，丁壬日(3,8)起庚子(6)，戊癸日(4,9)起壬子(8)
+  const g=(startGan+shichenIdx)%10;
+  return {g:g, z:shichenIdx};
+}
+
+// 自动更新干支显示
+function autoCalc(){
+  const y=+document.getElementById('gy').value;
+  const m=+document.getElementById('gm').value;
+  const d=+document.getElementById('gd').value;
+  const sc=+document.getElementById('sc').value;
+  if(!y||!m||!d) return;
+
+  const yGZ=calcYearGZ(y,m,d);
+  const dayGZ=calcDayGZ(y,m,d);
+  const yueIdx=calcYueJian(m,d);
+  const sGZ=calcShiGZ(dayGZ.g, sc);
+
+  document.getElementById('ngz').textContent=GAN_NAMES[yGZ.g]+ZHI_NAMES[yGZ.z];
+  document.getElementById('yjz').textContent=ZHI_NAMES[yueIdx];
+  document.getElementById('rgz').textContent=GAN_NAMES[dayGZ.g]+ZHI_NAMES[dayGZ.z];
+  document.getElementById('sgz').textContent=GAN_NAMES[sGZ.g]+ZHI_NAMES[sGZ.z];
+}
+
+// 绑定输入事件
+['gy','gm','gd','sc'].forEach(id=>{
+  document.getElementById(id).addEventListener('change',autoCalc);
+  document.getElementById(id).addEventListener('input',autoCalc);
+});
+
+function liuqin(gongWx, yaoWx){
+  if(gongWx===yaoWx) return '兄弟';
+  const sheng={'金':'水','水':'木','木':'火','火':'土','土':'金'};
+  if(sheng[gongWx]===yaoWx) return '子孙';
+  const ke={'金':'木','木':'土','土':'水','水':'火','火':'金'};
+  if(ke[gongWx]===yaoWx) return '妻财';
+  if(sheng[yaoWx]===gongWx) return '父母';
+  if(ke[yaoWx]===gongWx) return '官鬼';
+  return '';
+}
+
+function lsStart(rigan){
+  const i='甲乙丙丁戊己庚辛壬癸'.indexOf(rigan);
+  if(i<=1) return 0; if(i<=3) return 1; if(i===4) return 2;
+  if(i===5) return 3; if(i<=7) return 4; return 5;
+}
+
+function kongWang(rigan, rizhi){
+  const gi='甲乙丙丁戊己庚辛壬癸'.indexOf(rigan);
+  const zi=ZHI_IDX[rizhi];
+  const xun=(zi-gi+12)%12;
+  return [ZHI_NAMES[(xun+10)%12], ZHI_NAMES[(xun+11)%12]];
+}
+
+const CHONG={0:6,6:0,1:7,7:1,2:8,8:2,3:9,9:3,4:10,10:4,5:11,11:5};
+
+function wangShuai(yaoWx, yueWx){
+  if(yaoWx===yueWx) return {l:'旺',c:'wang'};
+  const s={'金':'水','水':'木','木':'火','火':'土','土':'金'};
+  const k={'金':'木','木':'土','土':'水','水':'火','火':'金'};
+  if(s[yueWx]===yaoWx) return {l:'相',c:'xiang'};
+  if(s[yaoWx]===yueWx) return {l:'休',c:'xiu'};
+  if(k[yueWx]===yaoWx) return {l:'囚',c:'qiu'};
+  if(k[yaoWx]===yueWx) return {l:'死',c:'si'};
+  return {l:'',c:''};
+}
+
+const yaoNames=['初爻','二爻','三爻','四爻','五爻','上爻'];
+const yaoOpts=[{v:'0',t:'少阳 ──'},{v:'1',t:'少阴 ─ ─'},{v:'2',t:'老阳 ── ○'},{v:'3',t:'老阴 ─ ─ ×'}];
+let yh='';
+for(let i=0;i<6;i++){
+  let o=yaoOpts.map((x,j)=>`<option value="${x.v}" ${j===0?'selected':''}>${x.t}</option>`).join('');
+  yh+=`<div class="yao-item"><span class="yl">${yaoNames[i]}</span><select id="y${i}">${o}</select></div>`;
+}
+document.getElementById('yaoInput').innerHTML=yh;
+
+function run(){
+  const y=+document.getElementById('gy').value;
+  const m=+document.getElementById('gm').value;
+  const d=+document.getElementById('gd').value;
+  const sc=+document.getElementById('sc').value;
+  if(!y||!m||!d){alert('请输入公历年月日');return;}
+
+  // 自动计算干支
+  const yGZ=calcYearGZ(y,m,d);
+  const dayGZ=calcDayGZ(y,m,d);
+  const yueIdx=calcYueJian(m,d);
+  const sGZ=calcShiGZ(dayGZ.g, sc);
+
+  const rigan=GAN_NAMES[dayGZ.g];
+  const rizhi=ZHI_NAMES[dayGZ.z];
+  const yue=ZHI_NAMES[yueIdx];
+  const yueWx=DZWX[yue];
+
+  const yaoVals=[];
+  for(let i=0;i<6;i++) yaoVals.push(+document.getElementById('y'+i).value);
+
+  const benHua=yaoVals.map(v=>(v===0||v===2)?1:0);
+  const bianHua=yaoVals.map(v=>{
+    if(v===2) return 0; if(v===3) return 1;
+    return (v===0)?1:0;
+  });
+
+  const benKey=benHua.join('');
+  const bianKey=bianHua.join('');
+  const benGua=GUA[benKey];
+  const bianGua=GUA[bianKey];
+
+  if(!benGua){document.getElementById('out').innerHTML='<p style="color:#C8392E;text-align:center">未找到对应卦象</p>';return;}
+
+  const kong=kongWang(rigan,rizhi);
+  const ls0=lsStart(rigan);
+  const liushen=[];
+  for(let i=0;i<6;i++) liushen.push(LIUSHEN[(ls0+i)%6]);
+
+  const benLq=benGua.najia.map(n=>liuqin(benGua.gongWx,DZWX[n[1]]));
+  const wangArr=benGua.najia.map(n=>wangShuai(DZWX[n[1]],yueWx));
+
+  const dongYao=[];
+  for(let i=0;i<6;i++) if(yaoVals[i]===2||yaoVals[i]===3) dongYao.push(i);
+
+  function yaoHtml(i,hua,najia,lq,isDong,dongVal,shi,ying,showWs,showLss){
+    const isYang=hua[i]===1;
+    const sym=isYang?'<div class="yao-yang"></div>':'<div class="yao-yin"><span></span><span></span></div>';
+    const dm=isDong?(dongVal===2?'○':'×'):'';
+    const sy=i===shi?'世':(i===ying?'应':'');
+    const cls=isDong?'dong':'';
+    const zhi=najia[i][1];
+    const isKong=kong.includes(zhi);
+    const isChong=CHONG[ZHI_IDX[zhi]]===ZHI_IDX[rizhi];
+    const ws=wangArr[i];
+    let tags='';
+    if(showWs){
+      if(isKong) tags+='<span class="tag-kong">空</span> ';
+      if(isChong) tags+='<span class="tag-chong">冲</span>';
+    }
+    return `<div class="yao-line ${cls} ${isKong?'kong':''}">
+      <div class="ylc">${yaoNames[i]}</div>
+      <div class="yn">${najia[i][0]}${zhi}</div>
+      <div class="ytd">${sym}<span class="tags">${dm}${tags}</span></div>
+      <div class="ylq">${lq[i]}</div>
+      <div class="ywang ${showWs?ws.c:''}">${showWs?ws.l:''}</div>
+      <div class="ysy">${sy}</div>
+    </div>`;
+  }
+
+  let benHtml='';
+  for(let i=0;i<6;i++){
+    benHtml+=yaoHtml(i,benHua,benGua.najia,benLq,
+      (yaoVals[i]===2||yaoVals[i]===3),yaoVals[i],benGua.shi,benGua.ying,true,true);
+  }
+
+  let bianHtml='';
+  if(bianGua){
+    const bianLq=bianGua.najia.map(n=>liuqin(benGua.gongWx,DZWX[n[1]]));
+    for(let i=0;i<6;i++){
+      const isDong=(yaoVals[i]===2||yaoVals[i]===3);
+      const isYang=bianHua[i]===1;
+      const sym=isYang?'<div class="yao-yang"></div>':'<div class="yao-yin"><span></span><span></span></div>';
+      const zhi=bianGua.najia[i][1];
+      const isKong=kong.includes(zhi);
+      bianHtml+=`<div class="yao-line ${isDong?'dong':''} ${isKong?'kong':''}">
+        <div class="ylc">${yaoNames[i]}</div>
+        <div class="yn">${bianGua.najia[i][0]}${zhi}</div>
+        <div class="ytd">${sym}</div>
+        <div class="ylq">${bianLq[i]}</div>
+        <div class="ywang"></div>
+        <div class="ysy"></div>
+      </div>`;
+    }
+  }
+
+  const dongStr=dongYao.length>0?dongYao.map(i=>yaoNames[i]).join('、'):'无';
+
+  document.getElementById('out').innerHTML=`
+    <div class="info-bar">
+      <div class="info-item"><span class="label">月建</span><span class="value">${yue}（${yueWx}）</span></div>
+      <div class="info-item"><span class="label">日辰</span><span class="value">${rigan}${rizhi}</span></div>
+      <div class="info-item"><span class="label">空亡</span><span class="value">${kong[0]}${kong[1]}</span></div>
+      <div class="info-item"><span class="label">宫属</span><span class="value">${benGua.gong}宫（${benGua.gongWx}）</span></div>
+      <div class="info-item"><span class="label">卦世</span><span class="value">${benGua.shiLabel}</span></div>
+      <div class="info-item"><span class="label">动爻</span><span class="value">${dongStr}</span></div>
+    </div>
+    <div class="pan-grid">
+      <div class="gua-box">
+        <div class="gua-title">本 卦</div>
+        <div class="gua-name">${benGua.name}</div>
+        <div class="gua-meta">${benGua.gong}宫 · ${benGua.shiLabel} · 世在${yaoNames[benGua.shi]}</div>
+        <div class="yao-list">${benHtml}</div>
+      </div>
+      <div class="gua-box">
+        <div class="gua-title">变 卦</div>
+        <div class="gua-name">${bianGua?bianGua.name:'无动爻'}</div>
+        <div class="gua-meta">${bianGua?bianGua.gong+'宫 · '+bianGua.shiLabel:''}</div>
+        <div class="yao-list">${bianHtml}</div>
+      </div>
+    </div>
+  `;
+}
+
+// ===== 摇币起卦（三枚铜钱，自下而上摇六次成卦）=====
+// 一背两字→单(少阳) · 两背一字→拆(少阴) · 三背→重(老阳○) · 三字→交(老阴×)
+let coinCount=0, tossing=false;
+const COIN_RESULT={0:'少阳 ──',1:'少阴 ─ ─',2:'老阳 ── ○',3:'老阴 ─ ─ ×'};
+
+function tossCoin(){
+  if(tossing) return;
+  const btn=document.getElementById('coinBtn');
+  if(coinCount>=6){alert('六爻已摇完，若再起新卦请点击「重新摇」');return;}
+  tossing=true;
+  btn.disabled=true;
+  const progress=document.getElementById('coinProgress');
+  progress.classList.remove('done');
+  progress.textContent='正在摇第 '+(coinCount+1)+' 爻……';
+  document.getElementById('coinResult').textContent='';
+  Array.from(document.querySelectorAll('#coinDisplay .coin')).forEach(c=>{
+    c.textContent='?';
+    c.classList.remove('shake');
+    void c.offsetWidth; // 重启动画
+    c.classList.add('shake');
+  });
+
+  setTimeout(()=>{
+    const backs=[Math.random()<0.5,Math.random()<0.5,Math.random()<0.5];
+    const backCount=backs.filter(Boolean).length;
+    const v=(backCount+3)%4; // 背数→爻值：1→0少阳 2→1少阴 3→2老阳 0→3老阴
+    const coins=document.querySelectorAll('#coinDisplay .coin');
+    backs.forEach((b,i)=>{coins[i].textContent=b?'背':'字';coins[i].className='coin '+(b?'bei':'zi');});
+    document.getElementById('y'+coinCount).value=v;
+    coinCount++;
+    progress.textContent='第 '+coinCount+' / 6 爻';
+    if(coinCount===6) progress.classList.add('done');
+    const detail=backs.map((b,i)=>'第'+(i+1)+'枚'+(b?'背':'字')).join(' · ');
+    document.getElementById('coinResult').innerHTML='<span class="r-strong">'+yaoNames[coinCount-1]+'：'+COIN_RESULT[v]+'</span>　'+detail;
+    if(coinCount===6){
+      document.getElementById('coinResult').innerHTML='<span class="r-strong">六爻已成，正在排盘……</span>';
+      setTimeout(()=>{
+        document.getElementById('coinResult').innerHTML='六爻已成，请阅盘。若要再占，请点击「重新摇」';
+        run();
+      },350);
+    }
+    tossing=false;
+    btn.disabled=false;
+  },600);
+}
+
+function resetCoins(){
+  if(tossing) return;
+  if(coinCount===0) return;
+  if(!confirm('已摇 '+coinCount+' 爻，确定重新起卦吗？')) return;
+  coinCount=0;
+  document.getElementById('coinProgress').textContent='第 0 / 6 爻';
+  document.getElementById('coinProgress').classList.remove('done');
+  document.getElementById('coinResult').textContent='静心默念所问之事，轻点「摇 币」起卦，自初爻摇起';
+  Array.from(document.querySelectorAll('#coinDisplay .coin')).forEach(c=>{c.textContent='字';c.className='coin zi';});
+}
+
+autoCalc();
+run();
+</script>
+</body>
+</html>
