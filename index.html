@@ -2,485 +2,558 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="zhaohaoran（浩然老师）">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23C8392E'/%3E%3Ccircle cx='50' cy='50' r='32' fill='none' stroke='%23DCB482' stroke-width='7'/%3E%3Crect x='42' y='42' width='16' height='16' fill='%23DCB482'/%3E%3C/svg%3E">
-<title>浩然老师六爻专业排盘</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='6' y='6' width='88' height='88' fill='%23FFFFFF' stroke='%23161616' stroke-width='6'/%3E%3Cpath d='M20 38h60M20 62h60' stroke='%23161616' stroke-width='7'/%3E%3C/svg%3E">
+<title>浩然老师六爻排盘</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:"Microsoft YaHei","微软雅黑",sans-serif;background:#FAF7F2;color:#2A1F14;min-height:100vh;padding:20px}
-  .container{max-width:960px;margin:0 auto}
-  .header{text-align:center;padding:18px 0 14px;border-bottom:3px double #C8392E;margin-bottom:18px}
-  .header h1{font-size:30px;font-weight:900;color:#8B2500;letter-spacing:6px}
-  .header .sub{font-size:13px;color:#B8860B;margin-top:4px;letter-spacing:3px;font-weight:600}
-  .input-panel{background:#fff;border:1px solid #E0D5C0;border-radius:8px;padding:16px 20px;margin-bottom:16px;box-shadow:0 2px 6px rgba(139,37,0,.06)}
-  .row{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:12px}
-  .row:last-child{margin-bottom:0}
-  .field{display:flex;flex-direction:column;gap:4px}
-  .field label{font-size:13px;color:#8B7355;font-weight:600}
-  .field select{padding:7px 10px;border:1px solid #D4C5A9;border-radius:4px;font-size:15px;font-family:inherit;background:#FFFDF8}
-  .yao-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-  .yao-item{display:flex;flex-direction:column;align-items:center;gap:3px}
-  .yao-item .yl{font-size:12px;color:#8B7355}
-  .yao-item select{padding:6px 8px;border:1px solid #D4C5A9;border-radius:4px;font-size:14px;font-family:inherit;background:#FFFDF8;width:90px;text-align:center}
-  .btn{padding:10px 32px;background:linear-gradient(135deg,#C8392E,#A02818);color:#fff;border:none;border-radius:4px;font-size:18px;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:6px;box-shadow:0 2px 8px rgba(200,57,46,.3)}
-  .btn:hover{opacity:.92}
-  .btn:disabled{opacity:.55;cursor:not-allowed}
-  .coin-panel{background:linear-gradient(135deg,#FDF7EC,#F8ECDA);border:1px solid #E2CBA7;border-radius:8px;padding:16px 20px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;box-shadow:0 2px 6px rgba(139,37,0,.05)}
-  .coin-left{display:flex;flex-direction:column;gap:10px;flex:1;min-width:260px}
-  .coin-title{font-size:15px;font-weight:800;color:#8B2500;letter-spacing:3px}
-  .coin-tip{font-size:12px;color:#B8860B;letter-spacing:1px}
-  .coins{display:flex;gap:14px;align-items:center}
-  .coin{width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#F7DA95,#C99A3B);border:3px solid #A87E2B;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;color:#6E4E12;box-shadow:0 2px 6px rgba(140,110,50,.35);user-select:none}
-  .coin.zi{color:#8B2500}
-  .coin.bei{color:#6E4E12}
-  .coin.shake{animation:coinShake .55s ease}
-  @keyframes coinShake{0%{transform:rotateY(0deg) scale(1)}30%{transform:rotateY(120deg) scale(1.08)}60%{transform:rotateY(240deg) scale(.95)}100%{transform:rotateY(360deg) scale(1)}}
-  .coin-result{font-size:15px;color:#5C4A3A;font-weight:700;line-height:1.6}
-  .coin-result .r-strong{color:#C8392E;font-weight:800}
-  .coin-right{display:flex;flex-direction:column;align-items:center;gap:10px}
-  .coin-progress{font-size:17px;font-weight:900;color:#B8860B;letter-spacing:2px}
-  .coin-progress.done{color:#C8392E}
-  .coin-btn{padding:10px 30px;letter-spacing:5px}
-  .btn-reset{padding:7px 20px;background:#fff;color:#8B7355;border:1px solid #D4C5A9;border-radius:4px;font-size:14px;font-family:inherit;cursor:pointer;letter-spacing:2px}
-  .btn-reset:hover{background:#FDF8F0;color:#8B2500;border-color:#C8392E}
-  .info-bar{background:#fff;border-left:4px solid #B8860B;padding:12px 18px;margin-bottom:14px;font-size:15px;display:flex;flex-wrap:wrap;gap:16px}
-  .info-item{display:flex;gap:6px}
-  .info-item .label{color:#8B7355}
-  .info-item .value{font-weight:700;color:#8B2500}
-  .pan-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-  @media(max-width:750px){.pan-grid{grid-template-columns:1fr}}
-  .gua-box{background:#fff;border:1px solid #E0D5C0;border-radius:8px;padding:16px}
-  .gua-title{font-size:16px;font-weight:700;color:#8B2500;text-align:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #E8DCC8}
-  .gua-name{font-size:24px;font-weight:900;color:#8B2500;text-align:center;margin-bottom:2px}
-  .gua-meta{font-size:13px;color:#B8860B;text-align:center;margin-bottom:10px;font-weight:600}
-  .yao-list{display:flex;flex-direction:column-reverse;gap:4px}
-  .yao-line{display:grid;grid-template-columns:44px 56px 1fr 48px 44px 40px;gap:4px;align-items:center;padding:5px 6px;border-radius:4px;font-size:14px}
-  .yao-line:hover{background:#FAF6EE}
-  .yao-line.dong{background:#FDF0EE;border-left:3px solid #C8392E}
-  .yao-line.kong{opacity:.6}
-  .yao-line .ylc{text-align:center;font-size:11px;color:#8B7355}
-  .yao-line .yn{text-align:center;font-weight:700;font-size:14px;color:#2A1F14}
-  .yao-line .ytd{display:flex;align-items:center;gap:4px}
-  .yao-line .ylq{text-align:center;font-size:13px;color:#5C4A3A}
-  .yao-line .ywang{text-align:center;font-size:12px;font-weight:600}
-  .wang{color:#C8392E}.xiang{color:#B8860B}.xiu{color:#8B7355}.qiu{color:#999}.si{color:#666}
-  .yao-line .ysy{text-align:center;font-size:12px;color:#C8392E;font-weight:700}
-  .yao-yang{width:56px;height:9px;background:#2A1F14;border-radius:1px}
-  .yao-yin{width:56px;height:9px;display:flex;gap:5px}
-  .yao-yin span{flex:1;background:#2A1F14;border-radius:1px}
-  .tags{font-size:11px;color:#C8392E}
-  .tag-kong{color:#999}.tag-chong{color:#C8392E}.tag-xing{color:#B8860B}
-  .footer{text-align:center;padding:14px;font-size:12px;color:#B0A090}
-  /* ===== 移动端适配（375px 窄屏优先，触屏友好） ===== */
-  @media (max-width: 767px){
-    body{padding:12px}
-    .header{padding:12px 0 10px;margin-bottom:12px}
-    .header h1{font-size:24px;letter-spacing:4px}
-    .header .sub{font-size:11px;letter-spacing:2px}
-    .input-panel{padding:12px 14px}
-    .row{gap:10px}
-    .field{flex:1 1 auto;min-width:0}
-    .field input,.field select{font-size:16px;height:44px;padding:6px 8px;box-sizing:border-box}
-    .field label{font-size:13px}
-    .yao-row{flex-wrap:wrap;gap:8px}
-    .yao-item{flex:1 1 30%;min-width:96px}
-    .yao-item .yl{font-size:12px}
-    .yao-item select{font-size:16px;height:44px;width:100%;box-sizing:border-box}
-    .coin-panel{flex-direction:column;align-items:stretch;gap:12px;padding:14px}
-    .coin-left{min-width:0;align-items:center;text-align:center;gap:8px}
-    .coin-tip{font-size:11px}
-    .coins{gap:12px}
-    .coin{width:48px;height:48px;font-size:17px}
-    .coin-result{font-size:14px}
-    .coin-right{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
-    .coin-progress{font-size:16px}
-    .coin-btn{min-height:44px;padding:10px 26px;font-size:17px}
-    .btn-reset{height:44px;padding:0 18px;font-size:14px}
-    .btn{width:100%;min-height:48px;padding:12px 20px;font-size:18px}
-    .info-bar{font-size:14px;gap:10px 16px;padding:10px 12px}
-    .gua-box{padding:12px}
-    .gua-name{font-size:22px}
-    .gua-meta{font-size:12px}
-    .yao-line{grid-template-columns:30px 54px minmax(0,1fr) 44px 26px 26px;gap:3px;padding:9px 5px;font-size:14px}
-    .yao-line .yn{font-size:14px}
-    .yao-line .ylq{font-size:14px}
-    .yao-line .ylc{font-size:11px}
-    .yao-line .ywang{font-size:12px}
-    .yao-line .ysy{font-size:12px}
-    .yao-yang{width:42px;height:8px}
-    .yao-yin{width:42px;height:8px;gap:4px}
-    .footer{font-size:11px;padding:10px}
-  }
+:root{
+  --ink:#161616; --ink2:#4A4A4A; --muted:#8C8C8C;
+  --line:#E8E8E8; --line2:#CFCFCF; --soft:#FAFAFA; --red:#B3261E;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#fff;color:var(--ink);-webkit-text-size-adjust:100%;
+}
+.wrap{max-width:700px;margin:0 auto;padding:26px 18px 0}
+
+/* 标题 */
+h1{font-size:22px;font-weight:700;letter-spacing:4px;text-align:center}
+.sub{font-size:12px;color:var(--muted);letter-spacing:2px;text-align:center;margin-top:7px}
+.hr{height:1px;background:var(--line2);margin:16px 0 0}
+
+/* 段落标题 */
+.sec{margin-top:18px}
+.sec-h{font-size:11.5px;color:var(--muted);letter-spacing:2px;display:flex;align-items:center;gap:10px}
+.sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* 输入 */
+.ctrl{margin-top:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.field{min-width:0}
+.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;letter-spacing:1px}
+input,select{
+  width:100%;height:42px;border:1px solid var(--line2);border-radius:3px;background:#fff;
+  color:var(--ink);font-size:16px;font-family:inherit;padding:0 8px;text-align:center;
+  -webkit-appearance:none;appearance:none;
+}
+select{text-align:left}
+input:focus,select:focus{outline:none;border-color:var(--ink)}
+
+/* 干支 */
+.gz{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+.gz-i{display:flex;flex-direction:column;gap:3px;min-width:0}
+.gz-i b{font-size:16px;font-weight:600;letter-spacing:1px}
+.gz-i span{font-size:10.5px;color:var(--muted);letter-spacing:1px}
+
+/* 摇币 */
+.coin-box{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:12px;border:1px solid var(--line);border-radius:4px;padding:14px}
+.coins{display:flex;gap:10px}
+.coin{
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--ink);
+  user-select:none;transition:background .15s,color .15s,border-color .15s;
+}
+.coin.bei{background:var(--ink);color:#fff;border-color:var(--ink)}
+.coin.spin{animation:spin .55s ease}
+@keyframes spin{0%{transform:rotateY(0)}50%{transform:rotateY(180deg)}100%{transform:rotateY(360deg)}}
+.coin-info{flex:1 1 180px;min-width:0}
+.coin-line1{font-size:13px;color:var(--ink2);letter-spacing:.5px}
+.coin-line2{font-size:11.5px;color:var(--muted);margin-top:4px;letter-spacing:.5px}
+.coin-acts{display:flex;gap:8px;align-items:center}
+
+/* 按钮 */
+.btn{
+  height:42px;padding:0 18px;border:1px solid var(--ink);background:var(--ink);color:#fff;
+  font-size:15px;font-family:inherit;letter-spacing:3px;border-radius:3px;cursor:pointer;
+}
+.btn:hover{background:#000}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-ghost{background:#fff;color:var(--ink2);border-color:var(--line2);letter-spacing:1px}
+.btn-ghost:hover{background:var(--soft);color:var(--ink)}
+.btn-main{width:100%;height:46px;font-size:16px;letter-spacing:8px;margin-top:12px}
+
+/* 手动画爻 */
+.yao-pick{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:12px}
+.yp{display:flex;flex-direction:column;gap:3px;min-width:0}
+.yp label{font-size:10.5px;color:var(--muted);text-align:center;letter-spacing:1px}
+.yp select{height:38px;font-size:13px;padding:0 2px;text-align:center}
+
+/* 结果 */
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:10px;border-top:1px solid var(--line)}
+.info div{display:flex;gap:8px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line);min-width:0}
+.info div span{font-size:11px;color:var(--muted);letter-spacing:1px;flex:0 0 auto}
+.info div b{font-size:14px;font-weight:600;letter-spacing:.5px}
+
+.gua-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.gua-grid.one{grid-template-columns:1fr}
+.gua-note{font-size:11px;color:var(--muted);margin-top:8px;letter-spacing:.5px}
+.gua{border:1px solid var(--line2);border-radius:4px;overflow:hidden}
+.gua-h{padding:10px 12px 9px;border-bottom:1px solid var(--line);position:relative;text-align:center}
+.gua-h .gt{position:absolute;left:12px;top:11px;font-size:10.5px;color:var(--muted);letter-spacing:2px}
+.gua-h .gn{font-family:"Songti SC","STSong","SimSun",serif;font-size:17px;font-weight:700;letter-spacing:1px}
+.gua-b{padding:8px 10px 10px}
+.gua-sub{font-size:10.5px;color:var(--muted);letter-spacing:.5px;margin-bottom:8px}
+
+/* 爻行 */
+.y-list{display:flex;flex-direction:column}
+.y-row{
+  display:grid;
+  grid-template-columns:20px 30px 46px 1fr 52px 62px 34px 18px;
+  gap:6px;align-items:center;
+  padding:6px 2px;border-top:1px solid var(--line);
+}
+.y-row:first-child{border-top:none}
+.y-row.dong{background:#FCFAFA}
+.y-row.kong{color:var(--muted)}
+.y-idx{font-size:10px;color:var(--muted);text-align:center;letter-spacing:0}
+.y-ls{font-size:10.5px;color:var(--muted);text-align:center;letter-spacing:0}
+.y-gz{font-family:"Songti SC","STSong","SimSun",serif;font-size:13.5px;font-weight:600;letter-spacing:0;white-space:nowrap;text-align:center}
+.y-line{display:flex;align-items:center;justify-content:center;position:relative}
+.bar-y{width:44px;height:7px;background:var(--ink);border-radius:1px}
+.bar-n{width:44px;height:7px;display:flex;gap:6px}
+.bar-n i{flex:1;background:var(--ink);border-radius:1px}
+.dong-mark{position:absolute;right:-2px;top:-9px;font-size:10px;color:var(--red);line-height:1}
+.y-lq{font-size:13px;letter-spacing:1px;white-space:nowrap;text-align:right;padding-right:4px}
+.y-ws{font-size:11px;color:var(--muted);text-align:center}
+.y-ws.w{color:var(--red)}
+.y-sy{font-size:11px;color:var(--ink2);text-align:center;font-weight:600}
+/* 伏神 */
+.y-fu{
+  display:flex;gap:6px;align-items:center;padding:3px 2px 5px 52px;
+  font-size:11px;color:var(--muted);border-top:1px dashed var(--line);
+}
+.y-fu .tagv{font-size:9.5px;border:1px solid var(--line2);border-radius:2px;padding:0 3px;line-height:1.3;color:var(--ink2)}
+.y-fu em{font-style:normal;font-family:"Songti SC","STSong","SimSun",serif;color:var(--ink2);letter-spacing:0}
+.y-mark{vertical-align:1px;font-size:9.5px;border:1px solid var(--line2);border-radius:2px;padding:0 2px;line-height:1.3;color:var(--muted);margin-left:2px}
+.y-mark.k{border-color:var(--ink);color:var(--ink)}
+
+/* 图例 / 页脚 */
+.legend{display:flex;flex-wrap:wrap;gap:7px 14px;margin-top:16px;font-size:11px;color:var(--ink2)}
+.foot{margin-top:16px;padding:14px 0 24px;border-top:1px solid var(--line);text-align:center;font-size:11px;color:var(--muted);line-height:1.9}
+
+@media (max-width:560px){
+  .wrap{padding:20px 14px 0}
+  h1{font-size:19px;letter-spacing:3px}
+  .gua-grid{grid-template-columns:1fr;gap:12px}
+  .yao-pick{grid-template-columns:repeat(3,1fr)}
+  .info{grid-template-columns:1fr 1fr}
+  .coin-box{padding:12px;gap:10px}
+  .coin{width:38px;height:38px;font-size:13px}
+  .coin-acts{width:100%;justify-content:space-between}
+  .y-row{grid-template-columns:16px 26px 40px 1fr 46px 54px 30px 16px;gap:4px;font-size:13px}
+  .bar-y,.bar-n{width:36px}
+  .y-fu{padding-left:46px}
+}
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <h1>浩然老师六爻专业排盘</h1>
-    <div class="sub">火珠林法 · 京房易 · 卜筮正宗</div>
+<div class="wrap">
+
+  <h1>浩然老师六爻排盘</h1>
+  <p class="sub">火珠林法 · 京房易 · 卜筮正宗</p>
+  <div class="hr"></div>
+
+  <!-- ===== 起卦时间 ===== -->
+  <div class="sec">
+    <p class="sec-h">起卦时间</p>
+    <div class="ctrl">
+      <div class="grid3">
+        <div class="field"><label>公历年</label><input type="number" id="gy" value="2026" min="1930" max="2070"></div>
+        <div class="field"><label>公历月</label><input type="number" id="gm" value="11" min="1" max="12"></div>
+        <div class="field"><label>公历日</label><input type="number" id="gd" value="16" min="1" max="31"></div>
+      </div>
+      <div class="field" style="margin-top:8px"><label>占时</label><select id="sc"></select></div>
+      <div class="gz">
+        <div class="gz-i"><b id="ngz">-</b><span>年柱</span></div>
+        <div class="gz-i"><b id="yjz">-</b><span>月建</span></div>
+        <div class="gz-i"><b id="rgz">-</b><span>日辰</span></div>
+        <div class="gz-i"><b id="sgz">-</b><span>时柱</span></div>
+      </div>
+    </div>
   </div>
-  <div class="input-panel">
-    <div class="row">
-      <div class="field"><label>公历年</label>
-        <input type="number" id="gy" value="2026" min="1900" max="2100" style="width:90px">
+
+  <!-- ===== 摇币 ===== -->
+  <div class="sec">
+    <p class="sec-h">摇卦 · 三枚铜钱</p>
+    <div class="coin-box">
+      <div class="coins" id="coinDisplay">
+        <div class="coin">字</div><div class="coin">字</div><div class="coin">字</div>
       </div>
-      <div class="field"><label>公历月</label>
-        <input type="number" id="gm" value="11" min="1" max="12" style="width:70px">
+      <div class="coin-info">
+        <div class="coin-line1" id="coinProgress">第 0 / 6 爻</div>
+        <div class="coin-line2" id="coinResult">字为阴 · 背为阳，自初爻摇起</div>
       </div>
-      <div class="field"><label>公历日</label>
-        <input type="number" id="gd" value="3" min="1" max="31" style="width:70px">
-      </div>
-      <div class="field"><label>占时</label>
-        <select id="sc">
-          <option value="0">子时</option><option value="1">丑时</option><option value="2">寅时</option>
-          <option value="3">卯时</option><option value="4">辰时</option><option value="5">巳时</option>
-          <option value="6" selected>午时</option><option value="7">未时</option><option value="8">申时</option>
-          <option value="9">酉时</option><option value="10">戌时</option><option value="11">亥时</option>
-        </select>
+      <div class="coin-acts">
+        <button class="btn" id="coinBtn" onclick="tossCoin()">摇 币</button>
+        <button class="btn btn-ghost" onclick="resetCoins()">重摇</button>
       </div>
     </div>
-    <div class="row" id="ganzhiShow" style="background:#FDF8F0;padding:10px 14px;border-radius:6px;border:1px solid #E8DCC8;font-size:15px;gap:20px;flex-wrap:wrap">
-      <div class="info-item"><span class="label">年柱</span><span class="value" id="ngz">-</span></div>
-      <div class="info-item"><span class="label">月建</span><span class="value" id="yjz">-</span></div>
-      <div class="info-item"><span class="label">日辰</span><span class="value" id="rgz">-</span></div>
-      <div class="info-item"><span class="label">时柱</span><span class="value" id="sgz">-</span></div>
-    </div>
-    <div class="row"><div class="yao-row" id="yaoInput"></div></div>
-    <div class="coin-panel">
-      <div class="coin-left">
-        <div class="coin-title">三枚铜钱 · 摇币起卦</div>
-        <div class="coins" id="coinDisplay">
-          <div class="coin zi">字</div>
-          <div class="coin zi">字</div>
-          <div class="coin zi">字</div>
-        </div>
-        <div class="coin-tip">字为阴 · 背为阳 · 自下而上，摇六次成卦</div>
-        <div class="coin-result" id="coinResult">静心默念所问之事，轻点「摇 币」起卦，自初爻摇起</div>
-      </div>
-      <div class="coin-right">
-        <div class="coin-progress" id="coinProgress">第 0 / 6 爻</div>
-        <button class="btn coin-btn" id="coinBtn" onclick="tossCoin()">摇 币</button>
-        <button class="btn-reset" onclick="resetCoins()">重新摇</button>
-      </div>
-    </div>
-    <div class="row"><button class="btn" onclick="run()">排 盘</button></div>
   </div>
-  <div id="out"></div>
-  <div class="footer">浩然老师（zhaohaoran）六爻专业排盘 · 依据卜筮正宗 · 仅供研习参考</div>
+
+  <!-- ===== 手动装卦 ===== -->
+  <div class="sec">
+    <p class="sec-h">手动画爻 · 自初爻起</p>
+    <div class="yao-pick" id="yaoInput"></div>
+    <button class="btn btn-main" onclick="run()">排 盘</button>
+  </div>
+
+  <!-- ===== 结果 ===== -->
+  <div class="sec" id="outWrap" style="display:none">
+    <p class="sec-h">卦盘</p>
+    <div id="out"></div>
+    <div class="legend">
+      <span>世 / 应：卦身之位</span>
+      <span>○ ×：动爻（○老阳变阴 · ×老阴变阳）</span>
+      <span>空：旬空</span>
+      <span>冲：日辰相冲</span>
+      <span>伏神：本宫首卦伏藏之爻</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    月建按真实节气交接时刻判定，日辰以 1949-10-01 甲子日推<br>
+    浩然老师（zhaohaoran）六爻排盘 · 依据卜筮正宗 · 仅供研习参考
+  </div>
 </div>
 <script>
-// ===== 64卦标准数据表（依据八宫卦序）=====
 const GUA = {"111111": {"name": "乾为天", "gong": "乾", "gongWx": "金", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "011111": {"name": "天风姤", "gong": "乾", "gongWx": "金", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "001111": {"name": "天山遁", "gong": "乾", "gongWx": "金", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "000111": {"name": "天地否", "gong": "乾", "gongWx": "金", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "000011": {"name": "风地观", "gong": "乾", "gongWx": "金", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "000001": {"name": "山地剥", "gong": "乾", "gongWx": "金", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "000101": {"name": "火地晋", "gong": "乾", "gongWx": "金", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "111101": {"name": "火天大有", "gong": "乾", "gongWx": "金", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "100100": {"name": "震为雷", "gong": "震", "gongWx": "木", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "000100": {"name": "雷地豫", "gong": "震", "gongWx": "木", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "010100": {"name": "雷水解", "gong": "震", "gongWx": "木", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "011100": {"name": "雷风恒", "gong": "震", "gongWx": "木", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "011000": {"name": "地风升", "gong": "震", "gongWx": "木", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "011010": {"name": "水风井", "gong": "震", "gongWx": "木", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "011110": {"name": "泽风大过", "gong": "震", "gongWx": "木", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "100110": {"name": "泽雷随", "gong": "震", "gongWx": "木", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "010010": {"name": "坎为水", "gong": "坎", "gongWx": "水", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "110010": {"name": "水泽节", "gong": "坎", "gongWx": "水", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "100010": {"name": "水雷屯", "gong": "坎", "gongWx": "水", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "101010": {"name": "水火既济", "gong": "坎", "gongWx": "水", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "101110": {"name": "泽火革", "gong": "坎", "gongWx": "水", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "101100": {"name": "雷火丰", "gong": "坎", "gongWx": "水", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "101000": {"name": "地火明夷", "gong": "坎", "gongWx": "水", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "010000": {"name": "地水师", "gong": "坎", "gongWx": "水", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "001001": {"name": "艮为山", "gong": "艮", "gongWx": "土", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "101001": {"name": "山火贲", "gong": "艮", "gongWx": "土", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "111001": {"name": "山天大畜", "gong": "艮", "gongWx": "土", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "110001": {"name": "山泽损", "gong": "艮", "gongWx": "土", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "110101": {"name": "火泽睽", "gong": "艮", "gongWx": "土", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "110111": {"name": "天泽履", "gong": "艮", "gongWx": "土", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "110011": {"name": "风泽中孚", "gong": "艮", "gongWx": "土", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "001011": {"name": "风山渐", "gong": "艮", "gongWx": "土", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "000000": {"name": "坤为地", "gong": "坤", "gongWx": "土", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "100000": {"name": "地雷复", "gong": "坤", "gongWx": "土", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "110000": {"name": "地泽临", "gong": "坤", "gongWx": "土", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "111000": {"name": "地天泰", "gong": "坤", "gongWx": "土", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "111100": {"name": "雷天大壮", "gong": "坤", "gongWx": "土", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "111110": {"name": "泽天夬", "gong": "坤", "gongWx": "土", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "111010": {"name": "水天需", "gong": "坤", "gongWx": "土", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "000010": {"name": "水地比", "gong": "坤", "gongWx": "土", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "011011": {"name": "巽为风", "gong": "巽", "gongWx": "木", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "111011": {"name": "风天小畜", "gong": "巽", "gongWx": "木", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["甲", "子"], ["甲", "寅"], ["甲", "辰"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "101011": {"name": "风火家人", "gong": "巽", "gongWx": "木", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "100011": {"name": "风雷益", "gong": "巽", "gongWx": "木", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "100111": {"name": "天雷无妄", "gong": "巽", "gongWx": "木", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "100101": {"name": "火雷噬嗑", "gong": "巽", "gongWx": "木", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "100001": {"name": "山雷颐", "gong": "巽", "gongWx": "木", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["庚", "子"], ["庚", "寅"], ["庚", "辰"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "011001": {"name": "山风蛊", "gong": "巽", "gongWx": "木", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "101101": {"name": "离为火", "gong": "离", "gongWx": "火", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "001101": {"name": "火山旅", "gong": "离", "gongWx": "火", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "011101": {"name": "火风鼎", "gong": "离", "gongWx": "火", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["辛", "丑"], ["辛", "亥"], ["辛", "酉"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "010101": {"name": "火水未济", "gong": "离", "gongWx": "火", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["己", "酉"], ["己", "未"], ["己", "巳"]]}, "010001": {"name": "山水蒙", "gong": "离", "gongWx": "火", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["丙", "戌"], ["丙", "子"], ["丙", "寅"]]}, "010011": {"name": "风水涣", "gong": "离", "gongWx": "火", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["辛", "未"], ["辛", "巳"], ["辛", "卯"]]}, "010111": {"name": "天水讼", "gong": "离", "gongWx": "火", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "101111": {"name": "天火同人", "gong": "离", "gongWx": "火", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["己", "卯"], ["己", "丑"], ["己", "亥"], ["壬", "午"], ["壬", "申"], ["壬", "戌"]]}, "110110": {"name": "兑为泽", "gong": "兑", "gongWx": "金", "shi": 5, "ying": 2, "shiLabel": "6世卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "010110": {"name": "泽水困", "gong": "兑", "gongWx": "金", "shi": 0, "ying": 3, "shiLabel": "1世卦", "najia": [["戊", "寅"], ["戊", "辰"], ["戊", "午"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "000110": {"name": "泽地萃", "gong": "兑", "gongWx": "金", "shi": 1, "ying": 4, "shiLabel": "2世卦", "najia": [["乙", "未"], ["乙", "巳"], ["乙", "卯"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "001110": {"name": "泽山咸", "gong": "兑", "gongWx": "金", "shi": 2, "ying": 5, "shiLabel": "3世卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["丁", "亥"], ["丁", "酉"], ["丁", "未"]]}, "001010": {"name": "水山蹇", "gong": "兑", "gongWx": "金", "shi": 3, "ying": 0, "shiLabel": "4世卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["戊", "申"], ["戊", "戌"], ["戊", "子"]]}, "001000": {"name": "地山谦", "gong": "兑", "gongWx": "金", "shi": 4, "ying": 1, "shiLabel": "5世卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["乙", "丑"], ["乙", "亥"], ["乙", "酉"]]}, "001100": {"name": "雷山小过", "gong": "兑", "gongWx": "金", "shi": 3, "ying": 0, "shiLabel": "游魂卦", "najia": [["丙", "辰"], ["丙", "午"], ["丙", "申"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}, "110100": {"name": "雷泽归妹", "gong": "兑", "gongWx": "金", "shi": 2, "ying": 5, "shiLabel": "归魂卦", "najia": [["丁", "巳"], ["丁", "卯"], ["丁", "丑"], ["庚", "午"], ["庚", "申"], ["庚", "戌"]]}};
 
+/* ===== 基础常量 ===== */
 const DZWX={'子':'水','丑':'土','寅':'木','卯':'木','辰':'土','巳':'火','午':'火','未':'土','申':'金','酉':'金','戌':'土','亥':'水'};
 const ZHI_IDX={'子':0,'丑':1,'寅':2,'卯':3,'辰':4,'巳':5,'午':6,'未':7,'申':8,'酉':9,'戌':10,'亥':11};
-const LIUSHEN=['青龙','朱雀','勾陈','螣蛇','白虎','玄武'];
 const ZHI_NAMES=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
 const GAN_NAMES=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const LIUSHEN=['青龙','朱雀','勾陈','螣蛇','白虎','玄武'];
+const SHENG={'金':'水','水':'木','木':'火','火':'土','土':'金'};
+const KE={'金':'木','木':'土','土':'水','水':'火','火':'金'};
+const CHONG={0:6,6:0,1:7,7:1,2:8,8:2,3:9,9:3,4:10,10:4,5:11,11:5};
+const LIUQIN_ALL=['父母','兄弟','子孙','妻财','官鬼'];
+const yaoNames=['初爻','二爻','三爻','四爻','五爻','上爻'];
 
-// ===== 干支计算 =====
-// 日干支：1949-10-01 = 甲子日(0,0)
-function calcDayGZ(y,m,d){
-  const base=new Date(1949,9,1);
-  const t=new Date(y,m-1,d);
+/* ===== 节令表（1930-2070，十二节交接时刻，UTC 墙钟秒）===== */
+const JIE_RAW="1930:-1261839448,-1259291333,-1256719407,-1254108158,-1251451981,-1248757318,-1246041620,-1243328582,-1240641098,-1237994552,-1235392788,-1232827763;1931:-1230282265,-1227734362,-1225162674,-1222551574,-1219895425,-1217200695,-1214484866,-1211771708,-1209084165,-1206437589,-1203835809,-1201270785;1932:-1198725297,-1196177440,-1193605841,-1190994821,-1188338692,-1185643937,-1182928065,-1180214892,-1177527428,-1174881022,-1172279420,-1169714498;1933:-1167169000,-1164621044,-1162049316,-1159438171,-1156781895,-1154086961,-1151370943,-1148657670,-1145970154,-1143323767,-1140722222,-1138157335;1934:-1135611813,-1133063783,-1130492020,-1127880981,-1125224956,-1122530319,-1119814535,-1117101382,-1114413832,-1111767301,-1109165599,-1106600609;1935:-1104055061,-1101507079,-1098935390,-1096324419,-1093668478,-1090973905,-1088258068,-1085544732,-1082856956,-1080210260,-1077608549,-1075043710;1936:-1072498403,-1069950644,-1067379054,-1064767996,-1062111810,-1059416960,-1056700902,-1053987410,-1051299565,-1048652855,-1046051122,-1043486267;1937:-1040940976,-1038393267,-1035821736,-1033210718,-1030554565,-1027859832,-1025144045,-1022430880,-1019743237,-1017096546,-1014494685,-1011929624;1938:-1009384132,-1006836302,-1004264774,-1001653881,-998997891,-996303203,-993587319,-990874039,-988186312,-985539516,-982937501,-980372282;1939:-977826729,-975278974,-972707629,-970096956,-967441138,-964746502,-962030500,-959316993,-956629079,-953982204,-951380190,-948814980;1940:-946269380,-943721548,-941150162,-938539526,-935883824,-933189358,-930473519,-927760111,-925072246,-922425457,-919823594,-917258529;1941:-914712966,-912165016,-909593396,-906982505,-904326610,-901632048,-898916216,-896202848,-893514972,-890868108,-888266157,-885701042;1942:-883155462,-880607486,-878035840,-875424970,-872769190,-870074849,-867359294,-864646182,-861958433,-859311498,-856709333,-854143993;1943:-851598310,-849050396,-846478890,-843868130,-841212399,-838518063,-835802470,-833089290,-830401492,-827754571,-825152477,-822587230;1944:-820041645,-817493825,-814922374,-812311562,-809655617,-806960947,-804245038,-801531669,-798843868,-796197077,-793595121,-791029942;1945:-788484334,-785936438,-783364921,-780754094,-778098205,-775403676,-772687994,-769974897,-767287313,-764640653,-762038749,-759473541;1946:-756927821,-754379767,-751808122,-749197288,-746541511,-743847078,-741131352,-738418105,-735730355,-733083553,-730481571,-727916389;1947:-725370820,-722822979,-720251524,-717640792,-714985023,-712290528,-709574652,-706861149,-704173137,-701526163,-698924138,-696359029;1948:-693813587,-691265880,-688694527,-686083840,-683428067,-680733581,-678017792,-675304423,-672616501,-669969584,-667367608,-664802543;1949:-662257132,-659709431,-657138044,-654527284,-651871406,-649176791,-646460905,-643747504,-641059551,-638412538,-635810414,-633245196;1950:-630699677,-628151954,-625580674,-622970133,-620314519,-617620140,-614904403,-612191089,-609503181,-606856101,-604253777,-601688300;1951:-599142578,-596594794,-594023600,-591413242,-588757845,-586063648,-583347969,-580634554,-577946510,-575299417,-572697204,-570131862;1952:-567586215,-565038426,-562467162,-559856698,-557201159,-554506782,-551790922,-549077343,-546389178,-543742055,-541139906,-538574667;1953:-536029078,-533481247,-530909854,-528299244,-525643662,-522949436,-520233906,-517520725,-514832837,-512185775,-509583543,-507018181;1954:-504472483,-501924559,-499353088,-496742450,-494086910,-491392751,-488677250,-485964056,-483276129,-480628962,-478026566,-475461091;1955:-472915448,-470367744,-467796543,-465186076,-462530522,-459836195,-457120448,-454406998,-451718894,-449071672,-446469291,-443903834;1956:-441358183,-438810485,-436239333,-433628931,-430973402,-428279053,-425563321,-422849988,-420162064,-417515047,-414912846,-412347474;1957:-409801775,-407253923,-404682593,-402072071,-399416498,-396722117,-394006311,-391292877,-388604869,-385957802,-383355599,-380790244;1958:-378244540,-375696649,-373125308,-370514859,-367859450,-365165269,-362449595,-359736170,-357048071,-354400852,-351798487,-349233025;1959:-346687302,-344139470,-341568205,-338957818,-336302478,-333608397,-330892808,-328179356,-325491126,-322843812,-320241477,-317676164;1960:-315130653,-312583011,-310011834,-307401387,-304745847,-302051486,-299335641,-296622016,-293933678,-291286281,-288683879,-286118536;1961:-283573044,-281025454,-278454321,-275843873,-273188324,-270494040,-267778405,-265065101,-262377048,-259729744,-257127229,-254561646;1962:-252015904,-249468160,-246897031,-244286746,-241631432,-238937325,-236221735,-233508380,-230820280,-228172927,-225570306,-223004601;1963:-220458814,-217911136,-215340171,-212730081,-210074883,-207380734,-204664943,-201951276,-199262890,-196615426,-194012861,-191447244;1964:-188901460,-186353705,-183782641,-181172500,-178517339,-175823297,-173107673,-170394231,-167706034,-165058710,-162456294,-159890817;1965:-157345083,-154797234,-152225962,-149615597,-146960308,-144266274,-141550718,-138837324,-136149130,-133501733,-130899208,-128333668;1966:-125787940,-123240132,-120668919,-118058611,-115403374,-112709423,-109993981,-107280664,-104592479,-101944997,-99342285,-96776535;1967:-94230701,-91682951,-89111887,-86501719,-83846554,-81152622,-78437201,-75723909,-73035738,-70388329,-67785757,-65220152;1968:-62674430,-60126757,-57555735,-54945547,-52290253,-49596055,-46880303,-44166769,-41478516,-38831137,-36228643,-33663105;1969:-31117392,-28569668,-25998566,-23388309,-20733013,-18038911,-15323309,-12609954,-9921875,-7274600,-4672120,-2106522;1970:439299,2987142,5558307,8168504,10823627,13517533,16233031,18946446,21634673,24282092,26884663,29450239;1971:31995906,34543525,37114484,39724560,42379688,45073731,47789467,50503212,53191812,55839514,58442197,61007742;1972:63553310,66100813,68671684,71281730,73936870,76630919,79346573,82060109,84748506,87396105,89998763,92564322;1973:95109919,97657452,100228356,102838433,105493583,108187610,110903241,113616768,116305164,118952835,121555658,124121423;1974:126667195,129214805,131785626,134395500,137050432,139744299,142459866,145173430,147861904,150509679,153112678,155678677;1975:158224650,160772352,163343147,165952890,168607631,171301321,174016764,176730293,179418797,182066524,184669356,187235169;1976:189781042,192328768,194899686,197509587,200164464,202858273,205573850,208287501,210976092,213623883,216226714,218792456;1977:221338263,223886005,226457049,229067144,231722160,234415921,237131272,239844614,242532941,245180636,247783549,250349449;1978:252895392,255443217,258014291,260624360,263279312,265972985,268688217,271401460,274089744,276737454,279340441,281906401;1979:284452293,286999938,289570778,292180677,294835630,297529511,300245077,302958653,305647185,308295002,310897967,313463868;1980:316009733,318557368,321128189,323738082,326393068,329087024,331802636,334516110,337204407,339851954,342454693,345020475;1981:347566358,350114123,352685107,355295102,357950087,360643959,363359512,366073029,368761393,371408972,374011709,376577475;1982:379123355,381671128,384242074,386851961,389506799,392200553,394916075,397629705,400318303,402966129,405569046,408134885;1983:410680722,413228382,415799232,418409063,421063851,423757542,426472993,429186577,431875203,434523064,437125932,439691620;1984:442237251,444784724,447355479,449965340,452620257,455314117,458029746,460743473,463432190,466080155,468683132,471248883;1985:473794505,476341907,478912581,481522415,484177352,486871196,489586715,492300256,494988781,497636673,500239769,502805781;1986:505351682,507899262,510469928,513079567,515734236,518427863,521143245,523856736,526545277,529193205,531796369,534362456;1987:536908380,539455900,542026417,544635848,547290335,549983938,552699519,555413353,558102247,560750380,563353540,565919532;1988:568465410,571012969,573583592,576193144,578847703,581541293,584256774,586970415,589659091,592307070,594910135,597476068;1989:600021955,602569629,605140448,607750194,610404835,613098313,615813565,618527032,621215633,623863639,626466812,629032857;1990:631578794,634126440,636697158,639306776,641961326,644654778,647370028,650083532,652772248,655420429,658023810,660590050;1991:663136087,665683704,668254335,670863882,673518413,676211897,678927179,681640635,684329241,686977267,689580470,692146560;1992:694692511,697240097,699810728,702420308,705074920,707768539,710484015,713197644,715886300,718534289,721137422,723703452;1993:726249391,728797029,731367752,733977431,736632103,739325713,742041122,744754678,747443267,750091202,752694333,755260429;1994:757806487,760354256,762925062,765534708,768189245,770882692,773597962,776311462,779000107,781648145,784251336,786817373;1995:789363245,791910771,794481364,797090886,799745403,802438948,805154460,807868304,810557314,813205632,815808935,818374935;1996:820920687,823468074,826038579,828648121,831302762,833996447,836712000,839425729,842114545,844762722,847365993,849932040;1997:852477868,855025317,857595847,860205376,862859966,865553551,868268963,870982578,873671329,876319510,878922878,881489092;1998:884035089,886582612,889153035,891762297,894416590,897110002,899825425,902539190,905228155,907876545,910480103,913046495;1999:915592629,918140223,920710662,923319877,925974060,928667347,931382699,934096446,936785399,939433701,942037071,944603247;2000:947149242,949696824,952267360,954876718,957531010,960224314,962939636,965653379,968342350,970990693,973594084,976160222;2001:978706156,981253729,983824348,986433862,989088290,991781615,994496802,997210341,999899171,1002547501,1005151012,1007717333;2002:1010263410,1012811045,1015381653,1017991097,1020645438,1023338686,1026053771,1028767158,1031455862,1034104158,1036707709,1039274054;2003:1041820063,1044367520,1046937892,1049547149,1052201429,1054894783,1057610139,1060323858,1063012814,1065661233,1068264791,1070831109;2004:1073377113,1075924573,1078494938,1081104199,1083758548,1086452026,1089167476,1091881176,1094569975,1097218158,1099821513,1102387737;2005:1104933779,1107481382,1110051910,1112661257,1115315570,1118008912,1120724194,1123437801,1126126600,1128774798,1131378146,1133944361;2006:1136490417,1139038036,1141608520,1144217731,1146871839,1149565019,1152280287,1154994047,1157683141,1160331683,1162935291,1165501609;2007:1168047610,1170595092,1173165479,1175774679,1178428824,1181122024,1183837304,1186551075,1189240169,1191888689,1194492241,1197058445;2008:1199604290,1202151624,1204721928,1207331152,1209985406,1212678704,1215394009,1218107770,1220796848,1223445398,1226049034,1228615338;2009:1231161248,1233708588,1236278851,1238888027,1241542250,1244235544,1246950809,1249664469,1252353457,1255002004,1257605776,1260172334;2010:1262718527,1265266071,1267836382,1270445430,1273099442,1275792564,1278507743,1281221347,1283910281,1286558789,1289162550,1291729103;2011:1294275277,1296822776,1299392999,1302001919,1304655793,1307348840,1310064120,1312778006,1315467254,1318115946,1320719696,1323286140;2012:1325832235,1328379744,1330950063,1333559137,1336213181,1338906354,1341621643,1344335433,1347024541,1349673103,1352276757,1354843136;2013:1357389218,1359936805,1362507291,1365116547,1367770690,1370463799,1373178876,1375892422,1378581376,1381229910,1383833633,1386400112;2014:1388946251,1391493796,1394064136,1396673200,1399327166,1402020182,1404735286,1407448948,1410138085,1412786850,1415390800,1417957445;2015:1420503632,1423051107,1425621340,1428230347,1430884356,1433577490,1436292735,1439006484,1441695574,1444344169,1446947917,1449514401;2016:1452060503,1454607963,1457178213,1459787251,1462441313,1465134510,1467849801,1470563581,1473252665,1475901203,1478504861,1481071267;2017:1483617345,1486164844,1488735163,1491344239,1493998262,1496691396,1499406642,1502120401,1504809518,1507458129,1510061869,1512628359;2018:1515174525,1517722110,1520292491,1522901567,1525555522,1528248549,1530963713,1533677440,1536366582,1539015283,1541619105,1544185555;2019:1546731538,1549278861,1551848986,1554457888,1557111768,1559804786,1562520033,1565233985,1567923414,1570572340,1573176264,1575742710;2020:1578288606,1580835799,1583405812,1586014689,1588668683,1591361906,1594077268,1596791171,1599480482,1602129316,1604733235,1607299770;2021:1609845806,1612393128,1614963222,1617572107,1620226031,1622919126,1625634329,1628348038,1631037176,1633685943,1636289927,1638856626;2022:1641402844,1643950247,1646520225,1649128814,1651782357,1654475149,1657190281,1659904148,1662593538,1665242548,1667846730,1670413576;2023:1672959891,1675507353,1678077374,1680685984,1683339526,1686032301,1688747441,1691461373,1694150803,1696799734,1699403735,1701970375;2024:1704516562,1707064027,1709634165,1712242937,1714896605,1717589394,1720304403,1723018156,1725707480,1728356397,1730960404,1733527023;2025:1736073167,1738620628,1741190838,1743799716,1746453433,1749146192,1751861099,1754574695,1757263917,1759912873,1762517044,1765083877;2026:1767630190,1770177728,1772747940,1775356800,1778010524,1780703301,1783418217,1786131763,1788820876,1791469757,1794073925,1796640752;2027:1799186998,1801734378,1804304373,1806913051,1809566712,1812259548,1814974623,1817688406,1820377708,1823026626,1825630715,1828197461;2028:1830743679,1833291073,1835861087,1838469786,1841123532,1843816560,1846531818,1849245671,1851934930,1854583711,1857187636,1859754281;2029:1862300515,1864848047,1867418257,1870027104,1872680866,1875373798,1878088943,1880802704,1883491914,1886140688,1888744606,1891311228;2030:1893857434,1896404908,1898974998,1901583661,1904237178,1906929870,1909644929,1912358840,1915048370,1917697517,1920301724,1922868457;2031:1925414589,1927961899,1930531863,1933140504,1935794112,1938486942,1941202131,1943916176,1946605811,1949254979,1951859140,1954425773;2032:1956971767,1959518939,1962088815,1964697456,1967351152,1970044079,1972759254,1975473164,1978162675,1980811825,1983416057,1985982800;2033:1988528887,1991076096,1993645942,1996254489,1998908027,2001600807,2004315897,2007029746,2009719222,2012368437,2014972865,2017539896;2034:2020086271,2022633670,2025203544,2027811975,2030465350,2033158001,2035873059,2038586947,2041276439,2043925627,2046530020,2049097009;2035:2051643343,2054190695,2056760499,2059368832,2062022097,2064714650,2067429671,2070143661,2072833350,2075482662,2078087032,2080653932;2036:2083200212,2085747597,2088317511,2090925977,2093579364,2096272021,2098987054,2101700937,2104390500,2107039740,2109644081,2112210963;2037:2114757245,2117304699,2119874773,2122483444,2125136969,2127829612,2130544509,2133258183,2135947535,2138596671,2141201046,2143768039;2038:2146314409,2148861828,2151431730,2154040169,2156693473,2159385939,2162100753,2164814480,2167503978,2170153296,2172757853,2175324984;2039:2177871401,2180418776,2182988584,2185596948,2188250291,2190942931,2193657971,2196371887,2199061444,2201710638,2204314975,2206881906;2040:2209428219,2211975596,2214545476,2217153933,2219807363,2222500084,2225215156,2227929005,2230618448,2233267534,2235871760,2238438605;2041:2240984890,2243532311,2246102272,2248710758,2251364073,2254056588,2256771511,2259485323,2262174816,2264824020,2267428388,2269995350;2042:2272541710,2275089173,2277659150,2280267641,2282920973,2285613495,2288328438,2291042330,2293731931,2296381237,2298985661,2301552556;2043:2304098723,2306645928,2309215668,2311824018,2314477327,2317169891,2319884873,2322598848,2325288613,2327938065,2330542552,2333109444;2044:2335655554,2338202661,2340772299,2343380589,2346033932,2348726644,2351441759,2354155720,2356845395,2359494802,2362099323,2364666316;2045:2367212555,2369759782,2372329506,2374937842,2377591175,2380283825,2382998888,2385712783,2388402331,2391051643,2393656195,2396223338;2046:2398769764,2401317069,2403886672,2406494703,2409147646,2411839939,2414554821,2417268804,2419958603,2422608150,2425212855,2427780082;2047:2430326547,2432873885,2435443522,2438051566,2440704517,2443396857,2446111834,2448825957,2451515895,2454165466,2456770045,2459337066;2048:2461883369,2464430684,2467000454,2469608724,2472261876,2474954304,2477669214,2480383138,2483072892,2485722410,2488327016,2490894055;2049:2493440328,2495987607,2498557381,2501165669,2503818764,2506511030,2509225735,2511939481,2514629138,2517278707,2519883510,2522450804;2050:2524997280,2527544634,2530114370,2532722601,2535375726,2538068097,2540782920,2543496757,2546186447,2548836017,2551440827,2554008114;2051:2556554538,2559101774,2561671330,2564279388,2566932434,2569624850,2572339774,2575053717,2577743486,2580393035,2582997735,2585564925;2052:2588111320,2590658585,2593228180,2595836247,2598489294,2601181774,2603896806,2606610802,2609300536,2611949996,2614554599,2617121736;2053:2619668174,2622215589,2624785404,2627393676,2630046820,2632739265,2635454235,2638168207,2640857924,2643507370,2646111975,2648679118;2054:2651225543,2653772881,2656342537,2658950590,2661603477,2664295655,2667010433,2669724424,2672414380,2675064139,2677668983,2680236210;2055:2682782560,2685329754,2687899292,2690507299,2693160237,2695852559,2698567519,2701281668,2703971738,2706621548,2709226370,2711793514;2056:2714339746,2716886834,2719456333,2722064404,2724717484,2727409945,2730124946,2732838969,2735528843,2738178551,2740783405,2743350660;2057:2745897008,2748444155,2751013625,2753621561,2756274403,2758966583,2761681351,2764395240,2767085050,2769734774,2772339772,2774907283;2058:2777453917,2780001275,2782570798,2785178643,2787831364,2790523489,2793238296,2795952320,2798642285,2801292078,2803897032,2806464430;2059:2809010955,2811558241,2814127728,2816735550,2819388242,2822080340,2824795133,2827509167,2830199198,2832849041,2835453944,2838021220;2060:2840567635,2843114894,2845684449,2848292388,2850945172,2853637297,2856352039,2859065952,2861755840,2864405614,2867010536,2869577857;2061:2872124310,2874671627,2877241302,2879849426,2882502393,2885194601,2887909328,2890623173,2893312956,2895962650,2898567595,2901135026;2062:2903681565,2906228825,2908798287,2911406129,2914058849,2916750889,2919465508,2922179338,2924869228,2927519076,2930124154,2932691671;2063:2935238236,2937785472,2940354866,2942962617,2945615301,2948307457,2951022330,2953736408,2956426415,2959076217,2961681128,2964248447;2064:2966794878,2969342092,2971911565,2974519464,2977172314,2979864610,2982579579,2985293662,2987983584,2990633281,2993238101,2995805359;2065:2998351774,3000899021,3003468550,3006076438,3008729127,3011421133,3014135812,3016849759,3019539719,3022189557,3024794557,3027361974;2066:3029908489,3032455762,3035025248,3037633066,3040285722,3042977754,3045692515,3048406617,3051096801,3053746852,3056351956,3058919310;2067:3061465625,3064012640,3066581912,3069189637,3071842332,3074534481,3077249350,3079963506,3082653739,3085303858,3087909028,3090476438;2068:3093022767,3095569743,3098138936,3100746584,3103399236,3106091374,3108806213,3111520269,3114210351,3116860385,3119465605,3122033171;2069:3124579698,3127126850,3129696154,3132303840,3134956483,3137648600,3140363458,3143077561,3145767639,3148417621,3151022848,3153590540;2070:3156137252,3158684508,3161253745,3163861187,3166513487,3169205281,3171919924,3174633996,3177324228,3179974401,3182579733,3185147445";
+const JIE_ZHI=(function(){ // 小寒→丑, 立春→寅 ... 大雪→子
+  const a=[]; for(let i=0;i<12;i++) a.push((i+1)%12); return a;
+})();
+const JIE_LIST=(function(){
+  const out=[];
+  JIE_RAW.split(';').forEach(function(row){
+    if(!row) return;
+    const p=row.split(':'), y=+p[0], ts=p[1].split(',');
+    for(let i=0;i<12;i++) out.push({t:+ts[i], y:y, z:JIE_ZHI[i]});
+  });
+  out.sort(function(a,b){return a.t-b.t;});
+  return out;
+})();
+
+/* 年柱：以立春交接时刻为界 */
+function yearGZ(y,m,d,ts){
+  let yy=y;
+  const lc=(function(){
+    const row=JIE_LIST.find(function(o){return o.y===y && o.z===2;});
+    return row?row.t:null;
+  })();
+  if(lc!==null){ if(ts<lc) yy=y-1; }
+  else if(m<2||(m===2&&d<4)) yy=y-1;
+  return {g:((yy-4)%10+10)%10, z:((yy-4)%12+12)%12, year:yy};
+}
+
+/* 月建：取当前时刻之前最近的节 */
+function yueJian(ts){
+  let lo=0, hi=JIE_LIST.length-1, ans=-1;
+  while(lo<=hi){
+    const mid=(lo+hi)>>1;
+    if(JIE_LIST[mid].t<=ts){ ans=mid; lo=mid+1; } else { hi=mid-1; }
+  }
+  if(ans<0) return {z:0, exact:false};
+  return {z:JIE_LIST[ans].z, exact:JIE_LIST[ans].t, yuan:JIE_LIST[ans].y};
+}
+
+/* 日柱：1949-10-01 甲子日 */
+function dayGZ(y,m,d){
+  const base=Date.UTC(1949,9,1);
+  const t=Date.UTC(y,m-1,d);
   const diff=Math.round((t-base)/86400000);
   return {g:((diff%10)+10)%10, z:((diff%12)+12)%12};
 }
 
-// 月建：根据十二节令近似日期
-// [月,日,月建地支索引] 立春后建寅(2) 惊蛰后建卯(3) ...
-const JIEQI = [
-  [1,6,1],   // 小寒后建丑
-  [2,4,2],   // 立春后建寅
-  [3,6,3],   // 惊蛰后建卯
-  [4,5,4],   // 清明后建辰
-  [5,6,5],   // 立夏后建巳
-  [6,6,6],   // 芒种后建午
-  [7,7,7],   // 小暑后建未
-  [8,8,8],   // 立秋后建申
-  [9,8,9],   // 白露后建酉
-  [10,8,10], // 寒露后建戌
-  [11,8,11], // 立冬后建亥
-  [12,7,0],  // 大雪后建子
-];
-function calcYueJian(m,d){
-  for(let i=JIEQI.length-1;i>=0;i--){
-    if(m>JIEQI[i][0]||(m===JIEQI[i][0]&&d>=JIEQI[i][1])) return JIEQI[i][2];
-  }
-  return 1;
+/* 时柱：甲己起甲子，乙庚起丙子，丙辛起戊子，丁壬起庚子，戊癸起壬子 */
+function shiGZ(dayGan, sc){
+  /* 甲己日甲子起，乙庚日丙子起，丙辛日戊子起，丁壬日庚子起，戊癸日壬子起 */
+  const start=2*(dayGan%5);
+  return {g:(start+sc)%10, z:sc};
 }
 
-// 年干支：以立春为界
-function calcYearGZ(y,m,d){
-  let year=y;
-  // 立春前算上一年
-  if(m<2||(m===2&&d<4)) year=y-1;
-  return {g:((year-4)%10+10)%10, z:((year-4)%12+12)%12};
-}
-
-// 时干支：甲己起甲子，乙庚起丙子，丙辛起戊子，丁壬起庚子，戊癸起壬子
-function calcShiGZ(dayGanIdx, shichenIdx){
-  const startGan=[0,2,4,6,8][Math.floor(dayGanIdx/2)%5];
-  // 甲己日(0,5)起甲子(0)，乙庚日(1,6)起丙子(2)，丙辛日(2,7)起戊子(4)，丁壬日(3,8)起庚子(6)，戊癸日(4,9)起壬子(8)
-  const g=(startGan+shichenIdx)%10;
-  return {g:g, z:shichenIdx};
-}
-
-// 自动更新干支显示
-function autoCalc(){
-  const y=+document.getElementById('gy').value;
-  const m=+document.getElementById('gm').value;
-  const d=+document.getElementById('gd').value;
-  const sc=+document.getElementById('sc').value;
-  if(!y||!m||!d) return;
-
-  const yGZ=calcYearGZ(y,m,d);
-  const dayGZ=calcDayGZ(y,m,d);
-  const yueIdx=calcYueJian(m,d);
-  const sGZ=calcShiGZ(dayGZ.g, sc);
-
-  document.getElementById('ngz').textContent=GAN_NAMES[yGZ.g]+ZHI_NAMES[yGZ.z];
-  document.getElementById('yjz').textContent=ZHI_NAMES[yueIdx];
-  document.getElementById('rgz').textContent=GAN_NAMES[dayGZ.g]+ZHI_NAMES[dayGZ.z];
-  document.getElementById('sgz').textContent=GAN_NAMES[sGZ.g]+ZHI_NAMES[sGZ.z];
-}
-
-// 绑定输入事件
-['gy','gm','gd','sc'].forEach(id=>{
-  document.getElementById(id).addEventListener('change',autoCalc);
-  document.getElementById(id).addEventListener('input',autoCalc);
-});
-
+/* ===== 五行 / 六亲 ===== */
 function liuqin(gongWx, yaoWx){
   if(gongWx===yaoWx) return '兄弟';
-  const sheng={'金':'水','水':'木','木':'火','火':'土','土':'金'};
-  if(sheng[gongWx]===yaoWx) return '子孙';
-  const ke={'金':'木','木':'土','土':'水','水':'火','火':'金'};
-  if(ke[gongWx]===yaoWx) return '妻财';
-  if(sheng[yaoWx]===gongWx) return '父母';
-  if(ke[yaoWx]===gongWx) return '官鬼';
+  if(SHENG[gongWx]===yaoWx) return '子孙';
+  if(KE[gongWx]===yaoWx) return '妻财';
+  if(SHENG[yaoWx]===gongWx) return '父母';
+  if(KE[yaoWx]===gongWx) return '官鬼';
   return '';
 }
-
 function lsStart(rigan){
-  const i='甲乙丙丁戊己庚辛壬癸'.indexOf(rigan);
+  const i=GAN_NAMES.indexOf(rigan);
   if(i<=1) return 0; if(i<=3) return 1; if(i===4) return 2;
   if(i===5) return 3; if(i<=7) return 4; return 5;
 }
-
 function kongWang(rigan, rizhi){
-  const gi='甲乙丙丁戊己庚辛壬癸'.indexOf(rigan);
-  const zi=ZHI_IDX[rizhi];
+  const gi=GAN_NAMES.indexOf(rigan), zi=ZHI_IDX[rizhi];
   const xun=(zi-gi+12)%12;
   return [ZHI_NAMES[(xun+10)%12], ZHI_NAMES[(xun+11)%12]];
 }
-
-const CHONG={0:6,6:0,1:7,7:1,2:8,8:2,3:9,9:3,4:10,10:4,5:11,11:5};
-
 function wangShuai(yaoWx, yueWx){
-  if(yaoWx===yueWx) return {l:'旺',c:'wang'};
-  const s={'金':'水','水':'木','木':'火','火':'土','土':'金'};
-  const k={'金':'木','木':'土','土':'水','水':'火','火':'金'};
-  if(s[yueWx]===yaoWx) return {l:'相',c:'xiang'};
-  if(s[yaoWx]===yueWx) return {l:'休',c:'xiu'};
-  if(k[yueWx]===yaoWx) return {l:'囚',c:'qiu'};
-  if(k[yaoWx]===yueWx) return {l:'死',c:'si'};
-  return {l:'',c:''};
+  if(yaoWx===yueWx) return {l:'旺',w:true};
+  if(SHENG[yueWx]===yaoWx) return {l:'相',w:true};
+  if(SHENG[yaoWx]===yueWx) return {l:'休',w:false};
+  if(KE[yueWx]===yaoWx) return {l:'囚',w:false};
+  if(KE[yaoWx]===yueWx) return {l:'死',w:false};
+  return {l:'',w:false};
 }
 
-const yaoNames=['初爻','二爻','三爻','四爻','五爻','上爻'];
-const yaoOpts=[{v:'0',t:'少阳 ──'},{v:'1',t:'少阴 ─ ─'},{v:'2',t:'老阳 ── ○'},{v:'3',t:'老阴 ─ ─ ×'}];
-let yh='';
-for(let i=0;i<6;i++){
-  let o=yaoOpts.map((x,j)=>`<option value="${x.v}" ${j===0?'selected':''}>${x.t}</option>`).join('');
-  yh+=`<div class="yao-item"><span class="yl">${yaoNames[i]}</span><select id="y${i}">${o}</select></div>`;
+/* ===== 伏神：缺六亲时，取本宫首卦中该六亲之爻，伏于同爻位 ===== */
+const PURE_KEY={乾:'111111',震:'100100',坎:'010010',艮:'001001',坤:'000000',巽:'011011',离:'101101',兑:'110110'};
+function fuShen(benGua, benLq){
+  const pure=GUA[PURE_KEY[benGua.gong]];
+  if(!pure) return {};
+  const pureLq=pure.najia.map(function(n){ return liuqin(benGua.gongWx, DZWX[n[1]]); });
+  const has={}; benLq.forEach(function(x){ has[x]=1; });
+  const out={};
+  LIUQIN_ALL.forEach(function(lq){
+    if(has[lq]) return;                       // 六亲不缺，不列伏神
+    for(let i=0;i<6;i++){
+      if(pureLq[i]===lq){                     // 取本宫首卦中该六亲最低爻位
+        out[i]={lq:lq, gan:pure.najia[i][0], zhi:pure.najia[i][1], wx:DZWX[pure.najia[i][1]]};
+        break;
+      }
+    }
+  });
+  return out;
 }
-document.getElementById('yaoInput').innerHTML=yh;
+
+/* ===== UI ===== */
+const el={
+  gy:document.getElementById('gy'), gm:document.getElementById('gm'), gd:document.getElementById('gd'),
+  sc:document.getElementById('sc'),
+  ngz:document.getElementById('ngz'), yjz:document.getElementById('yjz'),
+  rgz:document.getElementById('rgz'), sgz:document.getElementById('sgz'),
+  out:document.getElementById('out'), outWrap:document.getElementById('outWrap'),
+  progress:document.getElementById('coinProgress'), coinResult:document.getElementById('coinResult'),
+  coinBtn:document.getElementById('coinBtn')
+};
+
+/* 时辰下拉 */
+(function(){
+  let h='';
+  for(let i=0;i<12;i++){
+    const a=(i*2+23)%24, b=(i*2+1)%24;
+    h+='<option value="'+i+'"'+(i===6?' selected':'')+'>'+ZHI_NAMES[i]+'时 '+String(a).padStart(2,'0')+'–'+String(b).padStart(2,'0')+'</option>';
+  }
+  el.sc.innerHTML=h;
+})();
+
+/* 六爻选择 */
+(function(){
+  const opts=[{v:0,t:'少阳 ──'},{v:1,t:'少阴 ─ ─'},{v:2,t:'老阳 ── ○'},{v:3,t:'老阴 ─ ─ ×'}];
+  let h='';
+  for(let i=0;i<6;i++){
+    let o='';
+    opts.forEach(function(x,j){ o+='<option value="'+x.v+'"'+(j===0?' selected':'')+'>'+x.t+'</option>'; });
+    h+='<div class="yp"><label>'+yaoNames[i]+'</label><select id="y'+i+'">'+o+'</select></div>';
+  }
+  document.getElementById('yaoInput').innerHTML=h;
+})();
+
+/* 输入时刻 → 时间戳（按北京墙钟当作 UTC 秒，规避时区） */
+function stamp(y,mo,d,h){
+  return Date.UTC(y,mo-1,d,h,0,0)/1000;
+}
+
+function autoCalc(){
+  const y=+el.gy.value, m=+el.gm.value, d=+el.gd.value, sc=+el.sc.value;
+  if(!y||!m||!d) return;
+  const ts=stamp(y,m,d,sc*2);
+  const yGZ=yearGZ(y,m,d,ts), dGZ=dayGZ(y,m,d), sGZ=shiGZ(dGZ.g,sc);
+  const yj=yueJian(ts);
+  el.ngz.textContent=GAN_NAMES[yGZ.g]+ZHI_NAMES[yGZ.z];
+  el.yjz.textContent=ZHI_NAMES[yj.z];
+  el.rgz.textContent=GAN_NAMES[dGZ.g]+ZHI_NAMES[dGZ.z];
+  el.sgz.textContent=GAN_NAMES[sGZ.g]+ZHI_NAMES[sGZ.z];
+}
+['gy','gm','gd','sc'].forEach(function(id){
+  const n=document.getElementById(id);
+  n.addEventListener('change',autoCalc);
+  n.addEventListener('input',autoCalc);
+});
+
+function yaoRow(o){
+  const sym=o.yang
+    ? '<div class="bar-y"></div>'
+    : '<div class="bar-n"><i></i><i></i></div>';
+  const dm=o.dm?'<span class="dong-mark">'+o.dm+'</span>':'';
+  const marks=(o.kong?'<span class="y-mark k">空</span>':'')+(o.chong?'<span class="y-mark">冲</span>':'');
+  return '<div class="y-row'+(o.dong?' dong':'')+(o.kong?' kong':'')+'">'+
+    '<div class="y-idx">'+o.idx+'</div>'+
+    '<div class="y-ls">'+(o.ls||'')+'</div>'+
+    '<div class="y-line">'+sym+dm+'</div>'+
+    '<div></div>'+
+    '<div class="y-lq">'+o.lq+'</div>'+
+    '<div class="y-gz">'+o.gz+marks+'</div>'+
+    '<div class="y-ws'+(o.ws&&o.ws.w?' w':'')+'">'+(o.ws?o.ws.l:'')+'</div>'+
+    '<div class="y-sy">'+(o.sy||'')+'</div>'+
+    '</div>';
+}
+
+function fuRow(f, kong){
+  return '<div class="y-fu"><span class="tagv">伏</span>'+
+    '<em>'+f.lq+' '+f.zhi+f.wx+'</em>'+
+    (kong?'<span class="y-mark k">空</span>':'')+
+    '</div>';
+}
 
 function run(){
-  const y=+document.getElementById('gy').value;
-  const m=+document.getElementById('gm').value;
-  const d=+document.getElementById('gd').value;
-  const sc=+document.getElementById('sc').value;
-  if(!y||!m||!d){alert('请输入公历年月日');return;}
+  const y=+el.gy.value, m=+el.gm.value, d=+el.gd.value, sc=+el.sc.value;
+  if(!y||!m||!d) return;
 
-  // 自动计算干支
-  const yGZ=calcYearGZ(y,m,d);
-  const dayGZ=calcDayGZ(y,m,d);
-  const yueIdx=calcYueJian(m,d);
-  const sGZ=calcShiGZ(dayGZ.g, sc);
+  const ts=stamp(y,m,d,sc*2);
+  const yGZ=yearGZ(y,m,d,ts), dGZ=dayGZ(y,m,d), sGZ=shiGZ(dGZ.g,sc);
+  const yj=yueJian(ts);
+  const yueWx=DZWX[ZHI_NAMES[yj.z]];
+  const rigan=GAN_NAMES[dGZ.g], rizhi=ZHI_NAMES[dGZ.z];
 
-  const rigan=GAN_NAMES[dayGZ.g];
-  const rizhi=ZHI_NAMES[dayGZ.z];
-  const yue=ZHI_NAMES[yueIdx];
-  const yueWx=DZWX[yue];
+  const vals=[];
+  for(let i=0;i<6;i++) vals.push(+document.getElementById('y'+i).value);
 
-  const yaoVals=[];
-  for(let i=0;i<6;i++) yaoVals.push(+document.getElementById('y'+i).value);
-
-  const benHua=yaoVals.map(v=>(v===0||v===2)?1:0);
-  const bianHua=yaoVals.map(v=>{
-    if(v===2) return 0; if(v===3) return 1;
-    return (v===0)?1:0;
-  });
-
-  const benKey=benHua.join('');
-  const bianKey=bianHua.join('');
-  const benGua=GUA[benKey];
-  const bianGua=GUA[bianKey];
-
-  if(!benGua){document.getElementById('out').innerHTML='<p style="color:#C8392E;text-align:center">未找到对应卦象</p>';return;}
+  const benHua=vals.map(function(v){ return (v===0||v===2)?1:0; });
+  const bianHua=vals.map(function(v){ if(v===2) return 0; if(v===3) return 1; return (v===0)?1:0; });
+  const benGua=GUA[benHua.join('')], bianGua=GUA[bianHua.join('')];
+  if(!benGua){ el.outWrap.style.display='none'; alert('卦象不存在，请检查输入'); return; }
 
   const kong=kongWang(rigan,rizhi);
   const ls0=lsStart(rigan);
-  const liushen=[];
-  for(let i=0;i<6;i++) liushen.push(LIUSHEN[(ls0+i)%6]);
-
-  const benLq=benGua.najia.map(n=>liuqin(benGua.gongWx,DZWX[n[1]]));
-  const wangArr=benGua.najia.map(n=>wangShuai(DZWX[n[1]],yueWx));
-
-  const dongYao=[];
-  for(let i=0;i<6;i++) if(yaoVals[i]===2||yaoVals[i]===3) dongYao.push(i);
-
-  function yaoHtml(i,hua,najia,lq,isDong,dongVal,shi,ying,showWs,showLss){
-    const isYang=hua[i]===1;
-    const sym=isYang?'<div class="yao-yang"></div>':'<div class="yao-yin"><span></span><span></span></div>';
-    const dm=isDong?(dongVal===2?'○':'×'):'';
-    const sy=i===shi?'世':(i===ying?'应':'');
-    const cls=isDong?'dong':'';
-    const zhi=najia[i][1];
-    const isKong=kong.includes(zhi);
-    const isChong=CHONG[ZHI_IDX[zhi]]===ZHI_IDX[rizhi];
-    const ws=wangArr[i];
-    let tags='';
-    if(showWs){
-      if(isKong) tags+='<span class="tag-kong">空</span> ';
-      if(isChong) tags+='<span class="tag-chong">冲</span>';
-    }
-    return `<div class="yao-line ${cls} ${isKong?'kong':''}">
-      <div class="ylc">${yaoNames[i]}</div>
-      <div class="yn">${najia[i][0]}${zhi}</div>
-      <div class="ytd">${sym}<span class="tags">${dm}${tags}</span></div>
-      <div class="ylq">${lq[i]}</div>
-      <div class="ywang ${showWs?ws.c:''}">${showWs?ws.l:''}</div>
-      <div class="ysy">${sy}</div>
-    </div>`;
-  }
+  const benLq=benGua.najia.map(function(n){ return liuqin(benGua.gongWx, DZWX[n[1]]); });
+  const wangArr=benGua.najia.map(function(n){ return wangShuai(DZWX[n[1]], yueWx); });
+  const dongArr=vals.map(function(v){ return v===2||v===3; });
+  const anyDong=dongArr.some(Boolean);
+  const fu=fuShen(benGua, benLq);
 
   let benHtml='';
-  for(let i=0;i<6;i++){
-    benHtml+=yaoHtml(i,benHua,benGua.najia,benLq,
-      (yaoVals[i]===2||yaoVals[i]===3),yaoVals[i],benGua.shi,benGua.ying,true,true);
+  for(let i=5;i>=0;i--){
+    const zhi=benGua.najia[i][1];
+    benHtml+=yaoRow({
+      idx:yaoNames[i].charAt(0), ls:LIUSHEN[(ls0+i)%6], yang:benHua[i]===1,
+      dm:dongArr[i]?(vals[i]===2?'○':'×'):'', dong:dongArr[i],
+      lq:benLq[i], gz:benGua.najia[i][0]+zhi, ws:wangArr[i],
+      sy:i===benGua.shi?'世':(i===benGua.ying?'应':''),
+      kong:kong.indexOf(zhi)>=0, chong:CHONG[ZHI_IDX[zhi]]===ZHI_IDX[rizhi]
+    });
+    if(fu[i]) benHtml+=fuRow(fu[i], kong.indexOf(fu[i].zhi)>=0);
   }
 
-  let bianHtml='';
-  if(bianGua){
-    const bianLq=bianGua.najia.map(n=>liuqin(benGua.gongWx,DZWX[n[1]]));
-    for(let i=0;i<6;i++){
-      const isDong=(yaoVals[i]===2||yaoVals[i]===3);
-      const isYang=bianHua[i]===1;
-      const sym=isYang?'<div class="yao-yang"></div>':'<div class="yao-yin"><span></span><span></span></div>';
+  let bianHtml='', bianTitle='', bianMeta='';
+  if(anyDong && bianGua){
+    const bianLq=bianGua.najia.map(function(n){ return liuqin(benGua.gongWx, DZWX[n[1]]); });
+    for(let i=5;i>=0;i--){
       const zhi=bianGua.najia[i][1];
-      const isKong=kong.includes(zhi);
-      bianHtml+=`<div class="yao-line ${isDong?'dong':''} ${isKong?'kong':''}">
-        <div class="ylc">${yaoNames[i]}</div>
-        <div class="yn">${bianGua.najia[i][0]}${zhi}</div>
-        <div class="ytd">${sym}</div>
-        <div class="ylq">${bianLq[i]}</div>
-        <div class="ywang"></div>
-        <div class="ysy"></div>
-      </div>`;
+      bianHtml+=yaoRow({
+        idx:yaoNames[i].charAt(0), ls:'', yang:bianHua[i]===1, dm:'',
+        dong:dongArr[i], lq:bianLq[i], gz:bianGua.najia[i][0]+zhi, ws:null, sy:'',
+        kong:kong.indexOf(zhi)>=0, chong:false
+      });
     }
+    bianTitle=bianGua.name;
+    bianMeta=bianGua.gong+'宫 · '+bianGua.shiLabel;
   }
 
-  const dongStr=dongYao.length>0?dongYao.map(i=>yaoNames[i]).join('、'):'无';
+  const dongStr=dongArr.filter(Boolean).length
+    ? dongArr.map(function(v,i){ return v?yaoNames[i]:null; }).filter(Boolean).join('、')
+    : '静卦';
 
-  document.getElementById('out').innerHTML=`
-    <div class="info-bar">
-      <div class="info-item"><span class="label">月建</span><span class="value">${yue}（${yueWx}）</span></div>
-      <div class="info-item"><span class="label">日辰</span><span class="value">${rigan}${rizhi}</span></div>
-      <div class="info-item"><span class="label">空亡</span><span class="value">${kong[0]}${kong[1]}</span></div>
-      <div class="info-item"><span class="label">宫属</span><span class="value">${benGua.gong}宫（${benGua.gongWx}）</span></div>
-      <div class="info-item"><span class="label">卦世</span><span class="value">${benGua.shiLabel}</span></div>
-      <div class="info-item"><span class="label">动爻</span><span class="value">${dongStr}</span></div>
-    </div>
-    <div class="pan-grid">
-      <div class="gua-box">
-        <div class="gua-title">本 卦</div>
-        <div class="gua-name">${benGua.name}</div>
-        <div class="gua-meta">${benGua.gong}宫 · ${benGua.shiLabel} · 世在${yaoNames[benGua.shi]}</div>
-        <div class="yao-list">${benHtml}</div>
-      </div>
-      <div class="gua-box">
-        <div class="gua-title">变 卦</div>
-        <div class="gua-name">${bianGua?bianGua.name:'无动爻'}</div>
-        <div class="gua-meta">${bianGua?bianGua.gong+'宫 · '+bianGua.shiLabel:''}</div>
-        <div class="yao-list">${bianHtml}</div>
-      </div>
-    </div>
-  `;
+  el.out.innerHTML=
+    '<div class="info">'+
+      '<div><span>月建</span><b>'+ZHI_NAMES[yj.z]+'（'+yueWx+'）</b></div>'+
+      '<div><span>日辰</span><b>'+rigan+rizhi+'</b></div>'+
+      '<div><span>空亡</span><b>'+kong[0]+kong[1]+'</b></div>'+
+      '<div><span>宫属</span><b>'+benGua.gong+'宫（'+benGua.gongWx+'）</b></div>'+
+      '<div><span>卦世</span><b>'+benGua.shiLabel+'</b></div>'+
+      '<div><span>动爻</span><b>'+dongStr+'</b></div>'+
+    '</div>'+
+    '<div class="gua-grid'+(anyDong&&bianGua?'':' one')+'">'+
+      '<div class="gua">'+
+        '<div class="gua-h"><span class="gt">本 卦</span><span class="gn">'+benGua.name+'</span></div>'+
+        '<div class="gua-b">'+
+          '<div class="gua-sub">'+benGua.gong+'宫 · '+benGua.shiLabel+' · 世在'+yaoNames[benGua.shi]+'</div>'+
+          '<div class="y-list">'+benHtml+'</div>'+
+        '</div>'+
+      '</div>'+
+      (anyDong&&bianGua?
+      '<div class="gua">'+
+        '<div class="gua-h"><span class="gt">变 卦</span><span class="gn">'+bianTitle+'</span></div>'+
+        '<div class="gua-b">'+
+          '<div class="gua-sub">'+bianMeta+'</div>'+
+          '<div class="y-list">'+bianHtml+'</div>'+
+        '</div>'+
+      '</div>'
+      :'')+
+    (anyDong&&bianGua?'':'<div class="gua-note">六爻安静，无变卦，以本卦断之。</div>')+
+    '</div>';
+
+  el.outWrap.style.display='';
 }
 
-// ===== 摇币起卦（三枚铜钱，自下而上摇六次成卦）=====
-// 一背两字→单(少阳) · 两背一字→拆(少阴) · 三背→重(老阳○) · 三字→交(老阴×)
+/* ===== 摇币起卦 ===== */
 let coinCount=0, tossing=false;
-const COIN_RESULT={0:'少阳 ──',1:'少阴 ─ ─',2:'老阳 ── ○',3:'老阴 ─ ─ ×'};
+const COIN_RESULT={'0':'少阳 ──','1':'少阴 ─ ─','2':'老阳 ── ○','3':'老阴 ─ ─ ×'};
 
 function tossCoin(){
   if(tossing) return;
-  const btn=document.getElementById('coinBtn');
-  if(coinCount>=6){alert('六爻已摇完，若再起新卦请点击「重新摇」');return;}
-  tossing=true;
-  btn.disabled=true;
-  const progress=document.getElementById('coinProgress');
-  progress.classList.remove('done');
-  progress.textContent='正在摇第 '+(coinCount+1)+' 爻……';
-  document.getElementById('coinResult').textContent='';
-  Array.from(document.querySelectorAll('#coinDisplay .coin')).forEach(c=>{
-    c.textContent='?';
-    c.classList.remove('shake');
-    void c.offsetWidth; // 重启动画
-    c.classList.add('shake');
+  if(coinCount>=6){ alert('六爻已摇完，欲再占请点「重摇」'); return; }
+  tossing=true; el.coinBtn.disabled=true;
+  el.progress.textContent='正在摇第 '+(coinCount+1)+' 爻……';
+  el.coinResult.textContent='';
+  Array.from(document.querySelectorAll('#coinDisplay .coin')).forEach(function(c){
+    c.textContent=''; c.className='coin'; void c.offsetWidth; c.classList.add('spin');
   });
-
-  setTimeout(()=>{
-    const backs=[Math.random()<0.5,Math.random()<0.5,Math.random()<0.5];
-    const backCount=backs.filter(Boolean).length;
-    const v=(backCount+3)%4; // 背数→爻值：1→0少阳 2→1少阴 3→2老阳 0→3老阴
+  setTimeout(function(){
+    const backs=[Math.random()<0.5, Math.random()<0.5, Math.random()<0.5];
+    const n=backs.filter(Boolean).length;
+    const v=(n+3)%4;
     const coins=document.querySelectorAll('#coinDisplay .coin');
-    backs.forEach((b,i)=>{coins[i].textContent=b?'背':'字';coins[i].className='coin '+(b?'bei':'zi');});
+    backs.forEach(function(b,i){
+      coins[i].textContent=b?'背':'字';
+      coins[i].className='coin '+(b?'bei':'');
+    });
     document.getElementById('y'+coinCount).value=v;
     coinCount++;
-    progress.textContent='第 '+coinCount+' / 6 爻';
-    if(coinCount===6) progress.classList.add('done');
-    const detail=backs.map((b,i)=>'第'+(i+1)+'枚'+(b?'背':'字')).join(' · ');
-    document.getElementById('coinResult').innerHTML='<span class="r-strong">'+yaoNames[coinCount-1]+'：'+COIN_RESULT[v]+'</span>　'+detail;
+    el.progress.textContent='第 '+coinCount+' / 6 爻';
+    el.coinResult.textContent=yaoNames[coinCount-1]+'：'+COIN_RESULT[v];
     if(coinCount===6){
-      document.getElementById('coinResult').innerHTML='<span class="r-strong">六爻已成，正在排盘……</span>';
-      setTimeout(()=>{
-        document.getElementById('coinResult').innerHTML='六爻已成，请阅盘。若要再占，请点击「重新摇」';
-        run();
-      },350);
+      el.coinResult.textContent='六爻已成，已排盘';
+      run();
     }
-    tossing=false;
-    btn.disabled=false;
-  },600);
+    tossing=false; el.coinBtn.disabled=false;
+  },520);
 }
 
 function resetCoins(){
   if(tossing) return;
   if(coinCount===0) return;
-  if(!confirm('已摇 '+coinCount+' 爻，确定重新起卦吗？')) return;
+  if(!confirm('已摇 '+coinCount+' 爻，确定重摇？')) return;
   coinCount=0;
-  document.getElementById('coinProgress').textContent='第 0 / 6 爻';
-  document.getElementById('coinProgress').classList.remove('done');
-  document.getElementById('coinResult').textContent='静心默念所问之事，轻点「摇 币」起卦，自初爻摇起';
-  Array.from(document.querySelectorAll('#coinDisplay .coin')).forEach(c=>{c.textContent='字';c.className='coin zi';});
+  el.progress.textContent='第 0 / 6 爻';
+  el.coinResult.textContent='字为阴 · 背为阳，自初爻摇起';
+  Array.from(document.querySelectorAll('#coinDisplay .coin')).forEach(function(c){
+    c.textContent='字'; c.className='coin';
+  });
 }
 
 autoCalc();
 run();
+
 </script>
 </body>
 </html>
