@@ -1,0 +1,30 @@
+name: Update site page
+
+on:
+  push:
+    paths:
+      - '.github/workflows/update.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch and commit page
+        run: |
+          for i in 1 2 3 4 5; do
+            curl -fsSL --max-time 60 "https://aka.doubaocdn.com/s/8dZyJXYrjk" -o index.html && break
+            echo "retry $i"; sleep 10
+          done
+          MD5=$(md5sum index.html | cut -d' ' -f1)
+          echo "md5=$MD5 size=$(wc -c < index.html)"
+          echo "$MD5" | grep -q 9f1976a795069a37554b94bc670feae8
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Rename title to Haoran Liuyao Najia😀" -m "标题改为浩然六爻纳甲排盘" || echo "no change"
+          git push
