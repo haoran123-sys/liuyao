@@ -188,10 +188,15 @@ function cellHtml(o, dir){
   return dir==='R' ? ln+mkh+word : word+mkh+ln;
 }
 
-function fuRow(f, kong){
-  return '<div class="fu-line"><div class="fu-in"><span class="fu-tag">伏</span>'+
-    '<em>'+f.lq+' '+f.zhi+'</em>'+
-    (kong?'<div class="mk"><i>空</i></div>':'')+'</div></div>';
+/* 伏神列：单列竖直三行“伏／六亲／地支”，横排于本变卦之后 */
+function fuCell(f, kong){
+  if(!f) return '<div class="c-fu c-fu-e"></div>';
+  return '<div class="c-fu">'+
+    '<span class="fv">伏</span>'+
+    '<em>'+f.lq+'</em>'+
+    '<b>'+f.zhi+'</b>'+
+    (kong?'<div class="mk"><i>空</i></div>':'')+
+    '</div>';
 }
 
 function run(){
@@ -250,8 +255,8 @@ function run(){
         },'R'):'')+
       '</div>'+
       '<div class="ly-sy">'+(i===benGua.shi?'世':(i===benGua.ying?'应':''))+'</div>'+
+      fuCell(fu[i], fu[i]?kong.indexOf(fu[i].zhi)>=0:false)+
     '</div>';
-    if(fu[i]) rowsHtml+=fuRow(fu[i], kong.indexOf(fu[i].zhi)>=0);
   }
 
   const dongStr=dongArr.filter(Boolean).length
@@ -265,7 +270,7 @@ function run(){
       '</div>'+
     '</div>'+
     '<div class="pan-c"><span></span><span></span>'+
-      '<span class="c2">本 卦</span><span class="c3">'+(hasBian?'变 卦':'静 卦')+'</span><span></span>'+
+      '<span class="c2">本 卦</span><span class="c3">'+(hasBian?'变 卦':'静 卦')+'</span><span></span><span class="cf">伏神</span>'+
     '</div>';
 
   el.out.innerHTML=
